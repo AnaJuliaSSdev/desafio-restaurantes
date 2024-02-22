@@ -1,0 +1,17 @@
+{
+  "recommendations": [
+    "redhat.java",
+    "vscjava.vscode-java-debug",
+    "vscjava.vscode-java-dependency",
+    "vscjava.vscode-java-pack",
+    "vscjava.vscode-java-test",
+    "vscjava.vscode-lombok",
+    "vscjava.vscode-maven",
+    "vscjava.vscode-spring-initializr",
+    "eamodio.gitlens",
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "github.vscode-pull-request-github"
+  ],
+  "unwantedRecommendations": []
+}

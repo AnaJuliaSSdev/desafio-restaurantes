@@ -1,0 +1,16 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontSize": 16,
+  "editor.formatOnSave": true,
+  "editor.minimap.enabled": false,
+  "editor.renderWhitespace": "boundary",
+  "editor.tabSize": 2,
+  "explorer.compactFolders": false,
+  "explorer.confirmDragAndDrop": false,
+  "files.autoSave": "off",
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.dependency.packagePresentation": "hierarchical",
+  "terminal.integrated.fontSize": 18,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "java.configuration.updateBuildConfiguration": "interactive"
+}
