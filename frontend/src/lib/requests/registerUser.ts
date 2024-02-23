@@ -9,6 +9,6 @@ export async function createUser(fullName: string, email: string, password: stri
             'Content-Type': 'application/json',
         }
     })
-    console.log('rodou')
+    
     return 200;
 }

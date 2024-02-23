@@ -1,10 +1,17 @@
 import { FormEvent, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Container, Form } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  FormControl,
+  FormLabel,
+  Input,
+} from "@chakra-ui/react";
 
 import { authenticateRequest } from "@/lib/requests";
 import { Message, MessageProps } from "@/components/ui/Message";
 import { useAuth } from "@/hooks";
+import { useTranslation } from 'react-i18next'
 
 type InputRefs = {
   email: React.RefObject<HTMLInputElement>;
@@ -15,6 +22,7 @@ export function AuthenticateUserPage() {
   const { updateAccessToken } = useAuth();
   const [message, setMessage] = useState<MessageProps | null>(null);
   const navigate = useNavigate();
+  const { t } = useTranslation()
 
   const inputRefs: InputRefs = {
     email: useRef<HTMLInputElement>(null),
@@ -32,8 +40,9 @@ export function AuthenticateUserPage() {
 
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const email = inputRefs.email.current?.value;
-    const password = inputRefs.password.current?.value;
+    const email  = inputRefs.email.current?.value ?? "";
+    const password = inputRefs.password.current?.value ?? "";
+    
     if (!email || !password) {
       setMessage({
         type: "INFO",
@@ -76,31 +85,26 @@ export function AuthenticateUserPage() {
     <Container>
       <h1>Entrar</h1>
       {message && <Message {...message} />}
-      <Form method="POST" onSubmit={handleFormSubmit}>
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="email">Email:</Form.Label>
-          <Form.Control
-            type="text"
-            name="email"
-            id="email"
-            ref={inputRefs.email}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="password">Password:</Form.Label>
-          <Form.Control
+      <FormControl>
+        <Container className="mb-3">
+          <FormLabel htmlFor="email">{t('authenticate.e-mail')}:</FormLabel>
+          <Input type="text" name="email" id="email" ref={inputRefs.email} />
+        </Container>
+        <Container className="mb-3">
+          <FormLabel htmlFor="password">{t('authenticate.password')}:</FormLabel>
+          <Input
             type="password"
             name="password"
             id="password"
             ref={inputRefs.password}
           />
-        </Form.Group>
-        <Form.Group>
-          <Button type="submit" variant="success">
-            Entrar
+        </Container>
+        <Container>
+          <Button onClick={handleFormSubmit} type="submit">
+          {t('authenticate.login')}
           </Button>
-        </Form.Group>
-      </Form>
+        </Container>
+      </FormControl>
     </Container>
   );
 }

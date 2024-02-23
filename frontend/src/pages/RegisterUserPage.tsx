@@ -1,122 +1,117 @@
 import { FormEvent, useRef, useState } from "react";
-import { Button, Container, Form, FormControl, FormGroup, FormLabel } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  FormControl,
+  FormLabel,
+  Input,
+} from "@chakra-ui/react";
 import { createUser } from "../lib/requests/registerUser";
 import { useNavigate } from "react-router-dom";
 import { Message, MessageProps } from "@/components/ui/Message";
 import { userRegisterValidation } from "@/lib/utils/userRegisterValidation";
+import { useTranslation } from "react-i18next";
 
 type InputRefs = {
-    username: React.RefObject<HTMLInputElement>;
-    lastName: React.RefObject<HTMLInputElement>;
-    email: React.RefObject<HTMLInputElement>;
-    password: React.RefObject<HTMLInputElement>;
-}
+  username: React.RefObject<HTMLInputElement>;
+  lastName: React.RefObject<HTMLInputElement>;
+  email: React.RefObject<HTMLInputElement>;
+  password: React.RefObject<HTMLInputElement>;
+};
 
 export function RegisterUserPage() {
-    const navigate = useNavigate();
-    
-    const [ message, setMessage ] = useState<MessageProps | null>(null);
+  const navigate = useNavigate();
+  const { t } = useTranslation();
 
-    const inputRefs: InputRefs = {
-        username: useRef<HTMLInputElement>(null),
-        lastName: useRef<HTMLInputElement>(null),
-        email: useRef<HTMLInputElement>(null),
-        password: useRef<HTMLInputElement>(null)
+  const [message, setMessage] = useState<MessageProps | null>(null);
+
+  const inputRefs: InputRefs = {
+    username: useRef<HTMLInputElement>(null),
+    lastName: useRef<HTMLInputElement>(null),
+    email: useRef<HTMLInputElement>(null),
+    password: useRef<HTMLInputElement>(null),
+  };
+
+  const handleFormSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    const username = inputRefs.username.current?.value ?? "";
+    const lastName = inputRefs.lastName.current?.value ?? "";
+    const email = inputRefs.email.current?.value ?? "";
+    const password = inputRefs.password.current?.value ?? "";
+
+    let validationError = userRegisterValidation(
+      email,
+      password,
+      username,
+      lastName
+    );
+
+    if (validationError) {
+      setMessage({
+        type: "WARNING",
+        description: validationError.message,
+      });
+      return;
     }
 
-    const handleFormSubmit = async (event: FormEvent) => {
-        event.preventDefault();
-        const username = inputRefs.username.current?.value || '';
-        const lastName = inputRefs.lastName.current?.value || '';
-        const email = inputRefs.email.current?.value || '';
-        const password = inputRefs.password.current?.value || '';
-        
-        switch (userRegisterValidation(username, lastName, email, password)) {
-            case 'CAMPO_VAZIO':
-                setMessage({
-                    type: "WARNING",
-                    description: "Todos os campos devem ser preenchidos",
-                });
-                return;
-            
-            case 'SENHA_PEQUENA':
-                setMessage({
-                    type: "WARNING",
-                    description: "Senha muito pequena, deve conter no mínimo 8 caracteres",
-                });
-                return;
+    const fullName = `${username} ${lastName}`;
 
-            case 'SENHA_GRANDE':
-                setMessage({
-                    type: "WARNING",
-                    description: "Senha muito grande, deve conter no máximo 12 caracteres",
-                });
-                return;
-
-            case 'EMAIL_INVALIDO':
-                setMessage({
-                    type: "WARNING",
-                    description: "Insira um e-mail válido",
-                });
-                return;
-        }
-
-        const fullName = [username, lastName].join(" ")
-
-        createUser(fullName, email, password)
-        navigate('/')
+    try {
+      await createUser(fullName, email, password);
+      navigate("/");
+    } catch (error) {
+      setMessage({
+        type: "WARNING",
+        description:
+          "Erro ao criar usuário. Por favor, tente novamente mais tarde.",
+      });
     }
+  };
 
-    return (
-        <>
-        <Container>
-            <h1>Registrar</h1>
-            {message && <Message {...message} />}
-            <Form method="POST" onSubmit={handleFormSubmit}>
-                <FormGroup>
-                    <FormLabel htmlFor="email">Username</FormLabel>
-                    <FormControl
-                        type="text"
-                        name="username"
-                        id="username"
-                        className="mb-3"
-                        ref={inputRefs.username}
-                    >
-                    </FormControl>
+  return (
+    <Container>
+      <h1>Registrar</h1>
+      {message && <Message {...message} />}
+      <FormControl>
+        <FormLabel htmlFor="email">{t("register.name")}</FormLabel>
+        <Input
+          type="text"
+          name="username"
+          id="username"
+          className="mb-3"
+          ref={inputRefs.username}
+        ></Input>
 
-                    <FormLabel htmlFor="lastName">Last name</FormLabel>
-                    <FormControl
-                        type="text"
-                        name="lastName"
-                        id="lastName"
-                        className="mb-3"
-                        ref={inputRefs.lastName}
-                    >
-                    </FormControl>
+        <FormLabel htmlFor="lastName">{t("register.last-name")}</FormLabel>
+        <Input
+          type="text"
+          name="lastName"
+          id="lastName"
+          className="mb-3"
+          ref={inputRefs.lastName}
+        ></Input>
 
-                    <FormLabel htmlFor="email">E-mail</FormLabel>
-                    <FormControl
-                        type="text"
-                        name="email"
-                        id="email"
-                        className="mb-3"
-                        ref={inputRefs.email}
-                    >
-                    </FormControl>
+        <FormLabel htmlFor="email">{t("register.e-mail")}</FormLabel>
+        <Input
+          type="text"
+          name="email"
+          id="email"
+          className="mb-3"
+          ref={inputRefs.email}
+        ></Input>
 
-                    <FormLabel htmlFor="password">Password</FormLabel>
-                    <FormControl
-                        type="password"
-                        name="password"
-                        id="password"
-                        className="mb-3"
-                        ref={inputRefs.password}
-                    >
-                    </FormControl>
-                </FormGroup>
-                <Button type="submit">Submit</Button>
-            </Form>
-        </Container>
-        </>
-    )
+        <FormLabel htmlFor="password">{t("register.password")}</FormLabel>
+        <Input
+          type="password"
+          name="password"
+          id="password"
+          className="mb-3"
+          ref={inputRefs.password}
+        ></Input>
+        <Button type="submit" onClick={handleFormSubmit} colorScheme="green">
+          {t("register.sign-up")}
+        </Button>
+      </FormControl>
+    </Container>
+  );
 }

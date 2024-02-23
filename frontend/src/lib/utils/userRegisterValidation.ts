@@ -1,21 +1,26 @@
-export function userRegisterValidation(username: string, lastName: string, email: string, password: string): string {
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+export type ValidationResult = {
+    key: string;
+    message: string;
+};
+const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+export function userRegisterValidation(email: string, password: string, username: string, lastName: string,): ValidationResult | '' {
+    
 
     if(!username || !email || !password || !lastName) {
-        return 'CAMPO_VAZIO';
+        return { key: "EMPTY_FIELD", message: "Todos os campos devem ser preenchidos" };
     }
 
     if(password.length < 8) {
-        return 'SENHA_PEQUENA';
+        return { key: "SMALL_PASSWORD", message: "Senha muito pequena, deve conter no mínimo 8 caracteres" };
     }
 
     if(password.length > 12) {
-        return 'SENHA_GRANDE';
+        return { key: "LARGE_PASSWORD", message: "Senha muito grande, deve conter no máximo 12 caracteres" };
     }
 
     if(!emailPattern.test(email) || email.length < 1) {
-        return 'EMAIL_INVALIDO';
+        return { key: "INVALID_EMAIL", message: "Insira um e-mail válido" };
     }
 
-    return 'ERROR';
+    return '';
 }

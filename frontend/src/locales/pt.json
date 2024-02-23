@@ -1,0 +1,22 @@
+{
+    "home": {
+        "homePage": "Página Inicial",
+        "home": "Inicio",
+        "login": "Entrar", 
+        "register": "Registrar", 
+        "exit": "Sair"
+    },
+    "authenticate": {
+        "login": "Entrar", 
+        "e-mail": "E-mail",
+        "password": "Senha"
+    }, 
+    "register": {
+        "register": "Registrar", 
+        "name": "Nome", 
+        "last-name": "Sobrenome", 
+        "e-mail": "E-mail", 
+        "password": "Senha", 
+        "sign-up": "Cadastrar"
+    }
+}

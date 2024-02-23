@@ -12,11 +12,17 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.3",
+    "framer-motion": "^11.0.6",
+    "i18next": "^23.10.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
     "react-dom": "^18.2.0",
+    "react-i18next": "^14.0.5",
     "react-router-dom": "^6.22.1"
   },
   "devDependencies": {

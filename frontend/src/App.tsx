@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { AuthenticateUserPage } from "./pages/AuthenticateUserPage";
 import { RegisterUserPage } from "./pages/RegisterUserPage";
-
+import './lib/i18n.ts'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { Navigation } from "./components/ui/Navigation";
