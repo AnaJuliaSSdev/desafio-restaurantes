@@ -1,3 +1,3 @@
 package com.db.backend.dto;
 
-public record UserRegistrationRequestDTO(String email, String password) {}
+public record UserRegistrationRequestDTO(String username, String email, String password) {}
