@@ -12,7 +12,8 @@ export function Navigation() {
   return (
     <nav className="p-4">
       <Link to="/">Home</Link> |
-      {accessToken ? <Button variant="link" className="p-0" onClick={logout}>Sair</Button> : <Link to="/login">Entrar</Link>}
+      {accessToken ? <Button variant="link" className="p-0" onClick={logout}>Sair</Button> : <Link to="/login">Entrar</Link>} | 
+      {accessToken ? null : <Link to="/register">Registrar</Link>}
     </nav>
   );
 }
