@@ -13,7 +13,7 @@ import { userRegisterValidation } from "@/lib/utils/userRegisterValidation";
 import { useTranslation } from "react-i18next";
 
 type InputRefs = {
-  username: React.RefObject<HTMLInputElement>;
+  firstName: React.RefObject<HTMLInputElement>;
   lastName: React.RefObject<HTMLInputElement>;
   email: React.RefObject<HTMLInputElement>;
   password: React.RefObject<HTMLInputElement>;
@@ -26,7 +26,7 @@ export function RegisterUserPage() {
   const [message, setMessage] = useState<MessageProps | null>(null);
 
   const inputRefs: InputRefs = {
-    username: useRef<HTMLInputElement>(null),
+    firstName: useRef<HTMLInputElement>(null),
     lastName: useRef<HTMLInputElement>(null),
     email: useRef<HTMLInputElement>(null),
     password: useRef<HTMLInputElement>(null),
@@ -34,7 +34,7 @@ export function RegisterUserPage() {
 
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const username = inputRefs.username.current?.value ?? "";
+    const firstName = inputRefs.firstName.current?.value ?? "";
     const lastName = inputRefs.lastName.current?.value ?? "";
     const email = inputRefs.email.current?.value ?? "";
     const password = inputRefs.password.current?.value ?? "";
@@ -42,7 +42,7 @@ export function RegisterUserPage() {
     let validationError = userRegisterValidation(
       email,
       password,
-      username,
+      firstName,
       lastName
     );
 
@@ -54,10 +54,8 @@ export function RegisterUserPage() {
       return;
     }
 
-    const fullName = `${username} ${lastName}`;
-
     try {
-      await createUser(fullName, email, password);
+      await createUser(firstName, lastName,  email, password);
       navigate("/");
     } catch (error) {
       setMessage({
@@ -79,7 +77,7 @@ export function RegisterUserPage() {
           name="username"
           id="username"
           className="mb-3"
-          ref={inputRefs.username}
+          ref={inputRefs.firstName}
         ></Input>
 
         <FormLabel htmlFor="lastName">{t("register.last-name")}</FormLabel>
