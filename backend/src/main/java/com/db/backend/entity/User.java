@@ -30,12 +30,16 @@ public class User implements UserDetails {
     private Long id;
 
     @Column
+    private String username;
+
+    @Column
     private String email;
 
     @Column
     private String password;
 
-    public User(String email, String password) {
+    public User(String username, String email, String password) {
+        this.username = username;
         this.email = email;
         this.password = password;
     }
@@ -45,10 +49,15 @@ public class User implements UserDetails {
         return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
     }
 
-    @Override
-    public String getUsername() {
+    public String getEmail() {
         return this.email;
     }
+
+    @Override
+    public String getPassword() { return this.password; }
+
+    @Override
+    public String getUsername() { return this.username; }
 
     @Override
     public boolean isAccountNonExpired() {
