@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("restaurant")
 public class RestaurantController {
+
     @Autowired
     private RestaurantRepository repository;
     @PostMapping("/create")
     public ResponseEntity<Void> createRestaurant(@RequestBody @Valid RestaurantDTO data) {
-        Restaurant restaurant = new Restaurant(data.name().trim());
+        Restaurant restaurant = new Restaurant(data.name().trim(), data.description().trim(), data.website().trim());
         this.repository.save(restaurant);
         return ResponseEntity.ok().build();
     }
