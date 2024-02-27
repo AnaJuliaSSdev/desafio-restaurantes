@@ -1,5 +1,6 @@
 :root {
     --primaryRed: #DB181F;
+    --linkBlue: #4085ED;
 }
 
 .marginBottom{
@@ -13,6 +14,10 @@
 
 .colorRed {
     color: var(--primaryRed); 
+}
+
+.linkBlue {
+    color: var(--linkBlue) !important;
 }
 
 .bgRed {
@@ -34,3 +39,4 @@
     color: var(--primaryRed) !important; 
     box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.2);
 }
+

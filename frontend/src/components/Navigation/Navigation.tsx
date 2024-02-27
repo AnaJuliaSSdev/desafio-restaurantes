@@ -16,10 +16,16 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/hooks/useAuth";
 
 export function Navigation() {
   const { isOpen, onToggle } = useDisclosure();
   const { t } = useTranslation();
+  const {accessToken, updateAccessToken} = useAuth();
+
+  const logout = () => {
+    updateAccessToken(null);
+  };
 
   return (
     <Box>
@@ -66,25 +72,18 @@ export function Navigation() {
           direction={"row"}
           spacing={6}
         >
-          <Button
-            as={"a"}
-            fontSize={"lg"}
-            fontWeight={400}
-            variant={"link"}
-            href={"/register"}
-          >
-            {t("navigation.register")}
-          </Button>
-          <Button
-            as={"a"}
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"lg"}
-            fontWeight={600}
-            href={"/login"}
-            className="button-submit"
-          >
-            {t("navigation.login")}
-          </Button>
+          { accessToken ?
+            <>
+              <Button as={"a"} display={{ base: "none", md: "inline-flex" }} fontSize={"lg"} fontWeight={600} className="button-submit" onClick={logout}>{t("navigation.exit")}</Button>
+            </>
+            :
+            <>
+              <Button as={"a"} fontSize={"lg"} fontWeight={400} variant={"link"} href={"/register"}>{t("navigation.register")}</Button>
+              <Button as={"a"} display={{ base: "none", md: "inline-flex" }} fontSize={"lg"} fontWeight={600} href={"/login"} className="button-submit">{t("navigation.login")}</Button>
+            </>
+          }
+
+          
         </Stack>
       </Flex>
 

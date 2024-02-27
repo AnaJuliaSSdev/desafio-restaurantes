@@ -6,6 +6,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Link,
   Text,
 } from "@chakra-ui/react";
 import { createUser } from "../../lib/requests/registerUser";
@@ -71,7 +72,7 @@ export function RegisterUserPage() {
   };
 
   return (
-    <Container>
+    <Container className="register-container">
       <Text className="register-name colorRed align-center">Registrar</Text>
       {message && <Message {...message} />}
       <FormControl>
@@ -118,11 +119,16 @@ export function RegisterUserPage() {
           <Button
             type="submit"
             onClick={handleFormSubmit}
-            className="button-submit"
+            className="button-submit marginBottom"
           >
             {t("register.sign-up")}
           </Button> 
         </Container>
+
+        <Container className="align-center">
+          <Text as={'p'}>Já tem uma conta? <Link href="/login" className="linkBlue" fontWeight={"bold"}>Entre</Link> </Text>
+        </Container>
+
       </FormControl>
     </Container>
   );
