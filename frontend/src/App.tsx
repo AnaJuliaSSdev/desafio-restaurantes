@@ -6,6 +6,7 @@ import './lib/i18n.ts'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { Navigation } from "./components/Navigation/Navigation.tsx";
+import { RegisterRestaurantPage } from "./pages/RegisterRestaurantPage/RegisterRestaurantPage.tsx";
 
 export function App() {
   return (
@@ -15,6 +16,7 @@ export function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<AuthenticateUserPage />} />
         <Route path="/register" element={<RegisterUserPage />} />
+        <Route path="/restaurant/register" element={<RegisterRestaurantPage />} />
       </Routes>
     </Router>
   );

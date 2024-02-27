@@ -37,10 +37,10 @@ export function RegisterUserPage() {
 
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const firstName = inputRefs.firstName.current?.value ?? "";
-    const lastName = inputRefs.lastName.current?.value ?? "";
-    const email = inputRefs.email.current?.value ?? "";
-    const password = inputRefs.password.current?.value ?? "";
+    const firstName = inputRefs.firstName.current?.value.trim() ?? "";
+    const lastName = inputRefs.lastName.current?.value.trim() ?? "";
+    const email = inputRefs.email.current?.value.trim() ?? "";
+    const password = inputRefs.password.current?.value.trim() ?? "";
 
     let validationError = userRegisterValidation(
       email,
@@ -71,7 +71,7 @@ export function RegisterUserPage() {
 
   return (
     <Container className="register-container">
-      <Text className="register-name colorRed align-center">Registrar</Text>
+      <Text className="register-name colorRed align-center">{t('register.register')}</Text>
       {message && <Message {...message} />}
       <FormControl>
         <FormLabel htmlFor="firstName">{t("register.name")}</FormLabel>

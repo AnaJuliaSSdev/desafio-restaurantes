@@ -44,3 +44,7 @@
 .mobile-nav-item{
     border: 1px solid gray;
 }
+
+.display-block{
+    display: block !important;
+}

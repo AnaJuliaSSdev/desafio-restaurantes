@@ -1,0 +1,11 @@
+.register-container {
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.register-name{
+    font-size: 25px;
+    font-weight: bold;
+}

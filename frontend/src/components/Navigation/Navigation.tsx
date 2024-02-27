@@ -27,7 +27,7 @@ export function Navigation() {
   };
 
   return (
-    <Box>
+    <Box className="display-block">
       <Flex
         py={{ base: 2 }}
         px={{ base: 4 }}

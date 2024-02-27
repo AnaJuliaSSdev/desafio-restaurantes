@@ -29,6 +29,19 @@
         "already-have-account": "Já tem uma conta? ", 
         "log-in": "Entre"
     }, 
+    "register-restaurant": {
+        "register": "Registrar restaurante", 
+        "name": "Nome", 
+        "name-placeholder": "Digite o nome do restaurante...",
+        "description": "Descrição",
+        "description-placeholder": "Descreva o restaurante...", 
+        "website": "Website (opcional)",
+        "website-placeholder": "Cole o link do website do restaurante...",
+        "cep": "CEP", 
+        "cep-placeholder": "Digite o CEP do restaurante...",
+        "create": "Criar restaurante"
+
+    },
     "navigation": {
         "label-restaurants": "Restaurantes", 
         "children-label-restaurant": "Adicionar restaurante", 
