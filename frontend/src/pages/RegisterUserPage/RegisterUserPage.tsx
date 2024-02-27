@@ -126,7 +126,7 @@ export function RegisterUserPage() {
         </Container>
 
         <Container className="align-center">
-          <Text as={'p'}>Já tem uma conta? <Link href="/login" className="linkBlue" fontWeight={"bold"}>Entre</Link> </Text>
+          <Text as={'p'}>{t('register.already-have-account')} <Link href="/login" className="linkBlue" fontWeight={"bold"}>{t('register.log-in')}</Link> </Text>
         </Container>
 
       </FormControl>

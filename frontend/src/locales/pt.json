@@ -1,7 +1,7 @@
 {
     "home": {
         "homePage": "Página Inicial",
-        "home": "Inicio",
+        "home": "Início",
         "login": "Entrar", 
         "register": "Registrar", 
         "exit": "Sair"
@@ -11,7 +11,9 @@
         "e-mail": "E-mail",
         "email-placeholder": "Digite seu e-mail...", 
         "password": "Senha",
-        "password-placeholder": "Digite sua senha..."
+        "password-placeholder": "Digite sua senha...", 
+        "dont-have-account": "Não possui uma conta? ", 
+        "sign-up": "Cadastre-se"
     }, 
     "register": {
         "register": "Registrar", 
@@ -23,7 +25,9 @@
         "e-mail": "E-mail", 
         "password": "Senha", 
         "password-placeholder": "Digite sua senha...",
-        "sign-up": "Cadastrar"
+        "sign-up": "Cadastrar", 
+        "already-have-account": "Já tem uma conta? ", 
+        "log-in": "Entre"
     }, 
     "navigation": {
         "label-restaurants": "Restaurantes", 
@@ -32,6 +36,6 @@
         "login": "Entrar", 
         "exit": "Sair",
         "register": "Registrar", 
-        "home": "Inicio"
+        "home": "Início"
     }
 }

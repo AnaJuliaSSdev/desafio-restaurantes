@@ -123,7 +123,7 @@ export function AuthenticateUserPage() {
           </Button>
         </Container>
         <Container className="align-center">
-          <Text as={'p'}>Não tem uma conta? <Link href="/login" className="linkBlue" fontWeight={"bold"}>Cadastre-se</Link> </Text>
+          <Text as={'p'}>{t('authenticate.dont-have-account')}<Link href="/register" className="linkBlue" fontWeight={"bold"}>{t('authenticate.sign-up')}</Link> </Text>
         </Container>
       </FormControl>
     </Container>
