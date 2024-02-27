@@ -1,0 +1,8 @@
+:root {
+    --primaryRed: #DB181F;
+}
+
+.register-name{
+    font-size: 25px;
+    font-weight: bold;
+}

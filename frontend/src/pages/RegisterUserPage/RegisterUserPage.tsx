@@ -1,3 +1,4 @@
+import "./RegisterUserPage.css";
 import { FormEvent, useRef, useState } from "react";
 import {
   Button,
@@ -5,15 +6,16 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Text,
 } from "@chakra-ui/react";
-import { createUser } from "../lib/requests/registerUser";
+import { createUser } from "../../lib/requests/registerUser";
 import { useNavigate } from "react-router-dom";
-import { Message, MessageProps } from "@/components/ui/Message";
+import { Message, MessageProps } from "@/components/Message/Message";
 import { userRegisterValidation } from "@/lib/utils/userRegisterValidation";
 import { useTranslation } from "react-i18next";
 
 type InputRefs = {
-  username: React.RefObject<HTMLInputElement>;
+  firstName: React.RefObject<HTMLInputElement>;
   lastName: React.RefObject<HTMLInputElement>;
   email: React.RefObject<HTMLInputElement>;
   password: React.RefObject<HTMLInputElement>;
@@ -26,7 +28,7 @@ export function RegisterUserPage() {
   const [message, setMessage] = useState<MessageProps | null>(null);
 
   const inputRefs: InputRefs = {
-    username: useRef<HTMLInputElement>(null),
+    firstName: useRef<HTMLInputElement>(null),
     lastName: useRef<HTMLInputElement>(null),
     email: useRef<HTMLInputElement>(null),
     password: useRef<HTMLInputElement>(null),
@@ -34,7 +36,7 @@ export function RegisterUserPage() {
 
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const username = inputRefs.username.current?.value ?? "";
+    const firstName = inputRefs.firstName.current?.value ?? "";
     const lastName = inputRefs.lastName.current?.value ?? "";
     const email = inputRefs.email.current?.value ?? "";
     const password = inputRefs.password.current?.value ?? "";
@@ -42,26 +44,26 @@ export function RegisterUserPage() {
     let validationError = userRegisterValidation(
       email,
       password,
-      username,
+      firstName,
       lastName
     );
 
     if (validationError) {
       setMessage({
-        type: "WARNING",
+        type: "warning",
         description: validationError.message,
       });
       return;
     }
 
-    const fullName = `${username} ${lastName}`;
+    const fullName = `${firstName} ${lastName}`;
 
     try {
       await createUser(fullName, email, password);
       navigate("/");
     } catch (error) {
       setMessage({
-        type: "WARNING",
+        type: "warning",
         description:
           "Erro ao criar usuário. Por favor, tente novamente mais tarde.",
       });
@@ -70,47 +72,57 @@ export function RegisterUserPage() {
 
   return (
     <Container>
-      <h1>Registrar</h1>
+      <Text className="register-name colorRed align-center">Registrar</Text>
       {message && <Message {...message} />}
       <FormControl>
-        <FormLabel htmlFor="email">{t("register.name")}</FormLabel>
+        <FormLabel htmlFor="firstName">{t("register.name")}</FormLabel>
         <Input
+          placeholder={t("register.name-placeholder")}
           type="text"
-          name="username"
-          id="username"
-          className="mb-3"
-          ref={inputRefs.username}
+          name="firstName"
+          id="firstName"
+          className="mb-3 boxShadow"
+          ref={inputRefs.firstName}
         ></Input>
 
         <FormLabel htmlFor="lastName">{t("register.last-name")}</FormLabel>
         <Input
+          placeholder={t("register.last-name-placeholder")}
           type="text"
           name="lastName"
           id="lastName"
-          className="mb-3"
+          className="mb-3 boxShadow"
           ref={inputRefs.lastName}
         ></Input>
 
         <FormLabel htmlFor="email">{t("register.e-mail")}</FormLabel>
         <Input
+          placeholder={t("register.email-placeholder")}
           type="text"
           name="email"
           id="email"
-          className="mb-3"
+          className="mb-3 boxShadow"
           ref={inputRefs.email}
         ></Input>
 
         <FormLabel htmlFor="password">{t("register.password")}</FormLabel>
         <Input
+          placeholder={t("register.password-placeholder")}
           type="password"
           name="password"
           id="password"
-          className="mb-3"
+          className="mb-3 boxShadow marginBottom"
           ref={inputRefs.password}
         ></Input>
-        <Button type="submit" onClick={handleFormSubmit} colorScheme="green">
-          {t("register.sign-up")}
-        </Button>
+        <Container className="align-center">
+          <Button
+            type="submit"
+            onClick={handleFormSubmit}
+            className="button-submit"
+          >
+            {t("register.sign-up")}
+          </Button> 
+        </Container>
       </FormControl>
     </Container>
   );

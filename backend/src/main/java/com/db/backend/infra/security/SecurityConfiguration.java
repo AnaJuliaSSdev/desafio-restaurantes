@@ -30,11 +30,12 @@ public class SecurityConfiguration {
         return httpSecurity
             .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
             .csrf(csrf -> csrf.disable())
-            .headers(headers -> headers.frameOptions().disable())
+            .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/restaurant/create").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("/test-exception").permitAll()
                 .anyRequest().authenticated()

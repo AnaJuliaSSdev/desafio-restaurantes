@@ -9,14 +9,29 @@
     "authenticate": {
         "login": "Entrar", 
         "e-mail": "E-mail",
-        "password": "Senha"
+        "email-placeholder": "Digite seu e-mail...", 
+        "password": "Senha",
+        "password-placeholder": "Digite sua senha..."
     }, 
     "register": {
         "register": "Registrar", 
         "name": "Nome", 
+        "name-placeholder": "Digite seu nome...",
         "last-name": "Sobrenome", 
+        "last-name-placeholder": "Digite seu sobrenome...",
+        "email-placeholder": "Digite seu e-mail...", 
         "e-mail": "E-mail", 
         "password": "Senha", 
+        "password-placeholder": "Digite sua senha...",
         "sign-up": "Cadastrar"
+    }, 
+    "navigation": {
+        "label-restaurants": "Restaurantes", 
+        "children-label-restaurant": "Adicionar restaurante", 
+        "children-sublabel-resturant": "Cadastre um novo restaurante para votação!", 
+        "login": "Entrar", 
+        "exit": "Sair",
+        "register": "Registrar", 
+        "home": "Inicio"
     }
 }
