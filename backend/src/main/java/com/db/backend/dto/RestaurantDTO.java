@@ -1,5 +1,5 @@
 package com.db.backend.dto;
 
-public record RestaurantDTO(String name, String description, String website) {
+public record RestaurantDTO(String name, String description, String website, AdressDTO adress) {
 
 }
