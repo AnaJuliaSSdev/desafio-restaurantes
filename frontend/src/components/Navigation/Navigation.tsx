@@ -10,29 +10,29 @@ import {
   Collapse,
   Popover,
   PopoverTrigger,
-  useColorModeValue,
   useBreakpointValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/hooks/useAuth";
 
 export function Navigation() {
   const { isOpen, onToggle } = useDisclosure();
   const { t } = useTranslation();
+  const { accessToken, updateAccessToken } = useAuth();
+
+  const logout = () => {
+    updateAccessToken(null);
+  };
 
   return (
     <Box>
       <Flex
-        bg={useColorModeValue("white", "gray.800")}
-        color={useColorModeValue("gray.600", "white")}
-        minH={"60px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}
-        borderStyle={"solid"}
-        borderColor={useColorModeValue("gray.200", "gray.900")}
-        align={"center"}
+        className="flex-icon-mobile"
       >
         <Flex
           flex={{ base: 1, md: "auto" }}
@@ -51,10 +51,7 @@ export function Navigation() {
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
           <Text
             textAlign={useBreakpointValue({ base: "center", md: "left" })}
-            fontFamily={"heading"}
-            color={useColorModeValue("gray.800", "white")}
           ></Text>
-
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
           </Flex>
@@ -66,25 +63,35 @@ export function Navigation() {
           direction={"row"}
           spacing={6}
         >
-          <Button
-            as={"a"}
-            fontSize={"lg"}
-            fontWeight={400}
-            variant={"link"}
-            href={"/register"}
-          >
-            {t("navigation.register")}
-          </Button>
-          <Button
-            as={"a"}
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"lg"}
-            fontWeight={600}
-            href={"/login"}
-            className="button-submit"
-          >
-            {t("navigation.login")}
-          </Button>
+          {accessToken ? (
+            <Button
+              as={"a"}
+              display={{ base: "none", md: "inline-flex" }}
+              className="button-submit navigation-exit"
+              onClick={logout}
+            >
+              {t("navigation.exit")}
+            </Button>
+          ) : (
+            <>
+              <Button
+                as={"a"}
+                variant={"link"}
+                href={"/register"}
+                className="navigation-register"
+              >
+                {t("navigation.register")}
+              </Button>
+              <Button
+                as={"a"}
+                display={{ base: "none", md: "inline-flex" }}
+                href={"/login"}
+                className="button-submit navigation-exit"
+              >
+                {t("navigation.login")}
+              </Button>
+            </>
+          )}
         </Stack>
       </Flex>
 
@@ -96,26 +103,18 @@ export function Navigation() {
 }
 
 const DesktopNav = () => {
-  const linkColor = useColorModeValue("gray.600", "gray.200");
-  const linkHoverColor = useColorModeValue("gray.800", "white");
   const { t } = useTranslation();
 
   return (
     <Stack direction={"row"} spacing={4}>
-      <Box key="tiririca">
+      <Box fontSize={20} key={t("home.home")}>
         <Popover trigger={"hover"} placement={"bottom-start"}>
           <PopoverTrigger>
             <Box
               as="a"
               p={2}
               href={"/"}
-              fontSize={"lg"}
-              fontWeight={500}
-              color={linkColor}
-              _hover={{
-                textDecoration: "none",
-                color: linkHoverColor,
-              }}
+              className="link-home"
             >
               {t("home.home")}
             </Box>
@@ -129,7 +128,7 @@ const DesktopNav = () => {
 const MobileNav = () => {
   return (
     <Stack
-      bg={useColorModeValue("white", "gray.800")}
+      bg={"white"}
       p={4}
       display={{ md: "none" }}
     >
@@ -144,32 +143,16 @@ const MobileNavItem = () => {
 
   return (
     <Stack spacing={4} onClick={onToggle}>
-      <Box
-        py={2}
-        as="a"
-        href={"/"}
-        justifyContent="space-between"
-        alignItems="center"
-        _hover={{
-          textDecoration: "none",
-        }}
-      >
-        <Text
-          fontWeight={600}
-          color={useColorModeValue("gray.600", "gray.200")}
-        >
-          {t("home.home")}
-        </Text>
+      <Box as="a" href={"/"} className="link-start">
+        <Text>{t("home.home")}</Text>
       </Box>
 
       <Collapse in={isOpen} animateOpacity style={{ marginTop: "0!important" }}>
         <Stack
           mt={2}
           pl={4}
-          borderLeft={1}
-          borderStyle={"solid"}
-          borderColor={useColorModeValue("gray.200", "gray.700")}
           align={"start"}
+          className="movile-nav-item"
         >
           <Box as="a" py={2} href={"#"}></Box>
         </Stack>

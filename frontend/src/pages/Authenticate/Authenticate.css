@@ -6,3 +6,10 @@
     font-weight: bold;
     font-size: 25px;
 }
+
+.login-container {
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

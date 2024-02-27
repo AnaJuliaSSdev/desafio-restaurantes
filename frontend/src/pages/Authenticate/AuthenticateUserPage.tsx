@@ -7,6 +7,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Link,
   Text
 } from "@chakra-ui/react";
 
@@ -84,7 +85,7 @@ export function AuthenticateUserPage() {
   };
 
   return (  
-    <Container>
+    <Container className='login-container'>
       <Text className='authenticate-login colorRed align-center'>
         {t('authenticate.login')}
       </Text>
@@ -116,13 +117,13 @@ export function AuthenticateUserPage() {
             className='boxShadow marginBottom'
           />
         </Container>
-        <Container className='align-center'>
+        <Container className='align-center marginBottom'>
           <Button onClick={handleFormSubmit} type="submit" className='button-submit'>
             {t("authenticate.login")}
           </Button>
         </Container>
-        <Container>
-          <Text> </Text>
+        <Container className="align-center">
+          <Text as={'p'}>{t('authenticate.dont-have-account')}<Link href="/register" className="linkBlue" fontWeight={"bold"}>{t('authenticate.sign-up')}</Link> </Text>
         </Container>
       </FormControl>
     </Container>
