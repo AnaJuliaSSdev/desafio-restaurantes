@@ -8,8 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 
-@Table(name = "votings")
-@Entity(name = "votings")
+@Table(name = "adresses")
+@Entity(name = "adresses")
 @EqualsAndHashCode(of = "id")
 public class Adress {
 

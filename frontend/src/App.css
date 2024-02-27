@@ -1,0 +1,36 @@
+:root {
+    --primaryRed: #DB181F;
+}
+
+.marginBottom{
+    margin-bottom: 30px !important;
+}
+
+.boxShadow {
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.2);
+    border: none;
+}
+
+.colorRed {
+    color: var(--primaryRed); 
+}
+
+.bgRed {
+    color: var(--primaryRed); 
+}
+
+.align-center {
+    display: flex;
+    justify-content: center;
+}
+
+.button-submit {
+    color: white !important;
+    background-color: var(--primaryRed) !important; 
+}
+
+.button-submit:hover {
+    background-color: white !important ;
+    color: var(--primaryRed) !important; 
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.2);
+}

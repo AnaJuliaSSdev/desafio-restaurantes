@@ -26,7 +26,7 @@ public class Voting {
     private Long id;
 
     @Column(nullable = true)
-    @OneToMany(mappedBy = "restaurants", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
     private Collection<Restaurant> restaurants;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
