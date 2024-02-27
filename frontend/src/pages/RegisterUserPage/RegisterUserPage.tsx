@@ -56,10 +56,8 @@ export function RegisterUserPage() {
       return;
     }
 
-    const fullName = `${firstName} ${lastName}`;
-
     try {
-      await createUser(fullName, email, password);
+      await createUser(firstName, lastName,  email, password);
       navigate("/");
     } catch (error) {
       setMessage({
