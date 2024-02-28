@@ -65,8 +65,16 @@ public class Restaurant {
         this.website = website;
     }
 
-    public void setVotes(int votes) {
-        this.votes = votes;
+    public void increaseVotes() {
+        ++this.votes;
+    }
+
+    public void decreaseVotes() {
+        --this.votes;
+    }
+
+    public void resetVotes() {
+        this.votes = 0;
     }
 
     public void setFreeToVote(boolean freeToVote) {

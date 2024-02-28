@@ -1,6 +1,6 @@
 import { Message, MessageProps } from "@/components/Message/Message";
 import "./RegisterRestaurantPage.css";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Container,
