@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface AuthContextType {
   accessToken: string | null;
@@ -12,12 +12,9 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem('restaurant:access_token');
-    setAccessToken(token);
-  }, []);
+  const [accessToken, setAccessToken] = useState<string | null>(() => {
+    return localStorage.getItem('restaurant:access_token') ?? null;
+  });
 
   const updateAccessToken = (token: string | null) => {
     if (token) {

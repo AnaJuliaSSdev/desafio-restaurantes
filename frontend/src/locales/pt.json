@@ -59,5 +59,10 @@
         "exit": "Sair",
         "register": "Registrar", 
         "home": "Início"
+    }, 
+    "private-route" : {
+        "not-logged": "Você não está logado", 
+        "authenticate": "Você não está logado. É necessário autenticar-se.", 
+        "ok": "Ok"
     }
 }

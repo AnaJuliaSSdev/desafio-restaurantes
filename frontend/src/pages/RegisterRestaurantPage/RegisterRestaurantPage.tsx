@@ -1,6 +1,6 @@
 import { Message, MessageProps } from "@/components/Message/Message";
 import "./RegisterRestaurantPage.css";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Container,
@@ -11,15 +11,15 @@ import {
   Textarea,
   Button,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 import { restaurantRegisterValidations } from "@/lib/utils/restaurantRegisterValidations";
 import { createRestaurant } from "@/lib/requests/registerRestaurant";
+import { useNavigate } from "react-router-dom";
 
 export function RegisterRestaurantPage() {
   const VIA_CEP_URL = "https://viacep.com.br/ws/";
   const [message, setMessage] = useState<MessageProps | null>(null);
-  const navigate = useNavigate();
   const cepPattern = /\d{5}[-\s]?\d{3}/; 
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const [name, setName] = useState(""); 
@@ -31,7 +31,7 @@ export function RegisterRestaurantPage() {
   const [street, setStreet] = useState(""); 
   const [uf, setUf] = useState("");
   const [locale, setLocale] = useState("");
-
+  
   const handleCepChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     let cep = event.target.value;
     setCep(cep);
