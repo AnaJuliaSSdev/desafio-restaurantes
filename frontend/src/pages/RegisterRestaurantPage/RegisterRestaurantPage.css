@@ -1,8 +1,8 @@
 .register-container {
-    height: 85vh;
+    height: 100%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    margin-top: 10vh;
 }
 
 .register-name{
