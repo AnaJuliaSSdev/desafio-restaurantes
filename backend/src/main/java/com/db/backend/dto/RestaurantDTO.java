@@ -1,5 +1,15 @@
 package com.db.backend.dto;
 
-public record RestaurantDTO(String name, String description, String website, AdressDTO adress) {
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
+public record RestaurantDTO(
+        @NotEmpty
+        String name,
+        @NotEmpty
+        String description,
+        String website,
+        @NotNull
+        AdressDTO adress) {
 
 }
