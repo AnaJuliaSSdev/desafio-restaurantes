@@ -1,6 +1,6 @@
 import { Message, MessageProps } from "@/components/Message/Message";
 import "./RegisterRestaurantPage.css";
-import { useRef, FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Container,
@@ -13,29 +13,24 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { restaurantRegisterValidations } from "@/lib/utils/restaurantRegisterValidations";
-
-type InputRefs = {
-  name: React.RefObject<HTMLInputElement>;
-  description: React.RefObject<HTMLTextAreaElement>;
-  website: React.RefObject<HTMLInputElement>;
-  cep: React.RefObject<HTMLInputElement>;
-};
+import { createRestaurant } from "@/lib/requests/registerRestaurant";
 
 export function RegisterRestaurantPage() {
   const VIA_CEP_URL = "https://viacep.com.br/ws/";
-  const navigate = useNavigate();
   const [message, setMessage] = useState<MessageProps | null>(null);
-  const [cep, setCep] = useState("");
-  const [isCepValid, setIsCepValid] = useState(false); 
+  const navigate = useNavigate();
   const cepPattern = /\d{5}[-\s]?\d{3}/; 
   const { t } = useTranslation();
 
-  const inputRefs: InputRefs = {
-    name: useRef<HTMLInputElement>(null),
-    description: useRef<HTMLTextAreaElement>(null),
-    website: useRef<HTMLInputElement>(null),
-    cep: useRef<HTMLInputElement>(null)
-  };
+  const [name, setName] = useState(""); 
+  const [website, setWebsite] = useState(""); 
+  const [description, setDescription] = useState("");
+  const [cep, setCep] = useState("");
+  const [isCepValid, setIsCepValid] = useState(false); 
+  const [neighborhood, setNeighborhood] = useState("");
+  const [street, setStreet] = useState(""); 
+  const [uf, setUf] = useState("");
+  const [locale, setLocale] = useState("");
 
   const handleCepChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     let cep = event.target.value;
@@ -45,7 +40,11 @@ export function RegisterRestaurantPage() {
             const response = await fetch(`${VIA_CEP_URL}${cep}/json/`);
             const data = await response.json()
             setIsCepValid(true)
-            console.log("cep válido")
+            setMessage(null);
+            setNeighborhood(data.bairro)
+            setStreet(data.logradouro)
+            setUf(data.uf)
+            setLocale(data.localidade)  
             return data; 
         } catch{
             setMessage({
@@ -61,18 +60,11 @@ export function RegisterRestaurantPage() {
               "Insira um CEP válido.",
           });
     }
-    console.log("cep inválido")
     setIsCepValid(false);
   };
 
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const name = inputRefs.name.current?.value.trim() ?? "";
-    const description = inputRefs.description.current?.value.trim() ?? "";
-    const website = inputRefs.website.current?.value.trim() ?? "";
-    const cep = inputRefs.cep.current?.value.trim() ?? "";
-
-    console.log(isCepValid)
 
     let validationError = restaurantRegisterValidations(name, description);
 
@@ -84,7 +76,7 @@ export function RegisterRestaurantPage() {
       return;
     }
     try {
-      //cria restaurante
+      createRestaurant(name, description, website, {cep, street, neighborhood, locale, uf} )
       navigate("/");
     } catch (error) {
       setMessage({
@@ -110,7 +102,8 @@ export function RegisterRestaurantPage() {
           name="name"
           id="name"
           className="mb-3 boxShadow"
-          ref={inputRefs.name}
+          value={name}
+          onChange={(event) => setName(event.target.value)}
         ></Input>
 
         <FormLabel htmlFor="description">
@@ -121,7 +114,8 @@ export function RegisterRestaurantPage() {
           name="description"
           id="description"
           className="mb-3 boxShadow"
-          ref={inputRefs.description}
+          value = {description}
+          onChange = {(event) => setDescription(event.target.value)}
         ></Textarea>
 
         <FormLabel htmlFor="website">
@@ -133,7 +127,8 @@ export function RegisterRestaurantPage() {
           name="website"
           id="website"
           className="mb-3 boxShadow"
-          ref={inputRefs.website}
+          value = {website}
+          onChange={(event) => setWebsite(event.target.value)}
         ></Input>
 
         <FormLabel htmlFor="cep">{t("register-restaurant.cep")}</FormLabel>
@@ -145,7 +140,6 @@ export function RegisterRestaurantPage() {
           name="cep"
           id="cep"
           className="mb-3 boxShadow"
-          ref={inputRefs.website}
         ></Input>
 
         <FormLabel htmlFor="street">
@@ -157,7 +151,8 @@ export function RegisterRestaurantPage() {
           name="street"
           id="street"
           className="mb-3 boxShadow"
-          //ref={inputRefs.street}
+          value = {street}
+          onChange = {(event) => setStreet(event.target.value)}
         ></Input>
 
         <FormLabel htmlFor="neighborhood">
@@ -169,7 +164,8 @@ export function RegisterRestaurantPage() {
           name="neighborhood"
           id="neighborhood"
           className="mb-3 boxShadow"
-          //ref={inputRefs.neighborhood}
+          value = {neighborhood}
+          onChange={(event) => setNeighborhood(event.target.value)}
         ></Input>
 
         <FormLabel htmlFor="locale">
@@ -181,7 +177,8 @@ export function RegisterRestaurantPage() {
           name="locale"
           id="locale"
           className="mb-3 boxShadow"
-          //ref={inputRefs.locale}
+          value={locale}
+          onChange={(event) => setLocale(event.target.value)}
         ></Input>
 
         <FormLabel htmlFor="uf">
@@ -193,7 +190,8 @@ export function RegisterRestaurantPage() {
           name="uf"
           id="uf"
           className="mb-3 boxShadow"
-          //ref={inputRefs.uf}
+          value={uf}
+          onChange={(event) => setUf(event.target.value)}
         ></Input>
 
         <Container className="align-center">

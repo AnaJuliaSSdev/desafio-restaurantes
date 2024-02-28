@@ -1,5 +1,5 @@
 import './Authenticate.css'
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
@@ -16,35 +16,21 @@ import { Message, MessageProps } from "@/components/Message/Message";
 import { useAuth } from "@/hooks";
 import { useTranslation } from "react-i18next";
 
-type InputRefs = {
-  email: React.RefObject<HTMLInputElement>;
-  password: React.RefObject<HTMLInputElement>;
-};
-
 export function AuthenticateUserPage() {
   const { updateAccessToken } = useAuth();
   const [message, setMessage] = useState<MessageProps | null>(null);
   const navigate = useNavigate();
   const { t } = useTranslation();
-
-  const inputRefs: InputRefs = {
-    email: useRef<HTMLInputElement>(null),
-    password: useRef<HTMLInputElement>(null),
-  };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const resetForm = () => {
-    if (inputRefs.email.current) {
-      inputRefs.email.current.value = "";
-    }
-    if (inputRefs.password.current) {
-      inputRefs.password.current.value = "";
-    }
+      setEmail("");
+      setPassword("");
   };
 
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const email = inputRefs.email.current?.value ?? "";
-    const password = inputRefs.password.current?.value ?? "";
 
     if (!email || !password) {
       setMessage({
@@ -98,7 +84,8 @@ export function AuthenticateUserPage() {
             type="text"
             name="email"
             id="email"
-            ref={inputRefs.email}
+            value = {email}
+            onChange={(event) => setEmail(event.target.value)}
             boxShadow="2px 3px 5px rgba(0, 0, 0, 0.2)"
             border="none"
 
@@ -113,7 +100,8 @@ export function AuthenticateUserPage() {
             type="password"
             name="password"
             id="password"
-            ref={inputRefs.password}
+            value = {password}
+            onChange = {(event) => setPassword(event.target.value)}
             className='boxShadow marginBottom'
           />
         </Container>
