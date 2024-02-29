@@ -4,6 +4,7 @@ import com.db.backend.dto.AdressDTO;
 import com.db.backend.dto.RestaurantDTO;
 import com.db.backend.entity.Adress;
 import com.db.backend.entity.Restaurant;
+import com.db.backend.infra.security.JwtService;
 import com.db.backend.repository.AdressRepository;
 import com.db.backend.repository.RestaurantRepository;
 import jakarta.validation.Valid;
@@ -23,6 +24,8 @@ public class RestaurantController {
     private RestaurantRepository restaurantRepository;
     @Autowired
     private AdressRepository adressRepository;
+    @Autowired
+    private JwtService jwtService;
 
     @PostMapping("/create")
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody @Valid RestaurantDTO data) {
