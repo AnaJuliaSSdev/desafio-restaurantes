@@ -24,8 +24,6 @@ public class RestaurantController {
     private RestaurantRepository restaurantRepository;
     @Autowired
     private AdressRepository adressRepository;
-    @Autowired
-    private JwtService jwtService;
 
     @PostMapping("/create")
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody @Valid RestaurantDTO data) {
