@@ -101,6 +101,8 @@ public class Restaurant {
         return website;
     }
 
+    public Long getId() { return id; }
+
     public int getVotes() {
         return votes;
     }
