@@ -48,8 +48,7 @@ export function RegisterUserPage() {
     } catch (error) {
       setMessage({
         type: "warning",
-        description:
-          "Erro ao criar usuário. Por favor, tente novamente mais tarde.",
+        description: `${t('messages.creating-user')}`,
       });
     }
   };
