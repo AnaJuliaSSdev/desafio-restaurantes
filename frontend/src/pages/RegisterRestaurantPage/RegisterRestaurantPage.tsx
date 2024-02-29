@@ -76,8 +76,15 @@ export function RegisterRestaurantPage() {
       return;
     }
     try {
-      createRestaurant(name, description, website, {cep, street, neighborhood, locale, uf} )
-      navigate("/");
+      createRestaurant(name, description, website, {cep, street, neighborhood, locale, uf})
+      setMessage({
+        type: "success",
+        description:
+          "Restaurante cadastrado com sucesso!",
+      });
+      setTimeout(() => {
+        navigate("/");
+      }, 1500)
     } catch (error) {
       setMessage({
         type: "warning",

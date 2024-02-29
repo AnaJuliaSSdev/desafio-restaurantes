@@ -36,7 +36,7 @@ export function Navigation() {
             <Button
               variant={"link"}
               as={"a"}
-              href={"/register"}
+              href={"register"}
               textDecoration={"underline"}
             >
               {t("navigation.register")}

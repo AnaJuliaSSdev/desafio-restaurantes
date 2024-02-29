@@ -1,6 +1,6 @@
 import { http } from "./http";
 
-interface Adress {
+export interface Adress {
     cep: string;
     street: string;
     neighborhood: string;

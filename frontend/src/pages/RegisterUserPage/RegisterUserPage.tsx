@@ -44,7 +44,7 @@ export function RegisterUserPage() {
 
     try {
       await createUser(firstName, lastName,  email, password);
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       setMessage({
         type: "warning",
