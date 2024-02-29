@@ -7,10 +7,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Table(name = "adresses")
 @Entity(name = "adresses")
 @EqualsAndHashCode(of = "id")
+@NoArgsConstructor()
 public class Adress {
 
     @Id
@@ -29,12 +31,18 @@ public class Adress {
     @Column(nullable = false)
     private String locale;
 
-    public Adress(String cep, String street, String neighborhood, String locale) {
+    @Column(nullable = false)
+    private String uf;
+
+    public Adress(String cep, String street, String neighborhood, String locale, String uf) {
         this.cep = cep;
         this.street = street;
         this.neighborhood = neighborhood;
         this.locale = locale;
+        this.uf = uf;
     }
+
+    
 
     public String getCep() {
         return cep;
@@ -68,4 +76,15 @@ public class Adress {
         this.locale = locale;
     }
 
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

@@ -5,7 +5,6 @@ export type ValidationResult = {
 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 export function userRegisterValidation(email: string, password: string, username: string, lastName: string,): ValidationResult | '' {
     
-
     if(!username || !email || !password || !lastName) {
         return { key: "EMPTY_FIELD", message: "Todos os campos devem ser preenchidos" };
     }

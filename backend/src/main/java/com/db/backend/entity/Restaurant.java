@@ -2,16 +2,11 @@ package com.db.backend.entity;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -46,10 +41,16 @@ public class Restaurant {
     @Column(nullable = true)
     private LocalDateTime avaliableIn;
 
-    public Restaurant(String name, String description, String website) {
+    @ManyToOne
+    @JoinColumn(name = "adress_id")
+    private Adress adress;
+
+
+    public Restaurant(String name, String description, String website, Adress adress) {
         this.name = name;
         this.description = description;
         this.website = website;
+        this.adress = adress;
     }
 
     public void setName(String name) {
@@ -64,8 +65,16 @@ public class Restaurant {
         this.website = website;
     }
 
-    public void setVotes(int votes) {
-        this.votes = votes;
+    public void increaseVotes() {
+        ++this.votes;
+    }
+
+    public void decreaseVotes() {
+        --this.votes;
+    }
+
+    public void resetVotes() {
+        this.votes = 0;
     }
 
     public void setFreeToVote(boolean freeToVote) {
@@ -74,6 +83,10 @@ public class Restaurant {
 
     public void setAvaliableIn(LocalDateTime avaliableIn) {
         this.avaliableIn = avaliableIn;
+    }
+
+    public void setAdress(Adress adress) {
+        this.adress = adress;
     }
 
     public String getName() {
@@ -88,6 +101,8 @@ public class Restaurant {
         return website;
     }
 
+    public Long getId() { return id; }
+
     public int getVotes() {
         return votes;
     }
@@ -100,4 +115,7 @@ public class Restaurant {
         return avaliableIn;
     }
 
+    public Adress getAdress() {
+        return adress;
+    }
 }

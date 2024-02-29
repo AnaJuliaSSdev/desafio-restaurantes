@@ -45,29 +45,29 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody @Valid UserRegistrationRequestDTO data) {
         String firstName = data.firstName();
-        String lastName = data.lastName(); 
+        String lastName = data.lastName();
         String email = data.email();
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
         Matcher matcher = pattern.matcher(email);
         int passwordLength = data.password().length();
 
-        if(!matcher.matches()){
+        if (!matcher.matches()) {
             return ResponseEntity.badRequest().build();
         }
         if (this.repository.findByEmail(data.email()) != null) {
             return ResponseEntity.badRequest().build();
         }
-    
-        if (passwordLength < 8 || passwordLength > 12){
-            return ResponseEntity.badRequest().build(); 
+
+        if (passwordLength < 8 || passwordLength > 12) {
+            return ResponseEntity.badRequest().build();
         }
 
-        if(firstName.isEmpty() || lastName.isEmpty()){
-            return ResponseEntity.badRequest().build(); 
+        if (firstName.isEmpty() || lastName.isEmpty()) {
+            return ResponseEntity.badRequest().build();
         }
-    
+
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User((data.firstName()+ " " + data.lastName()).trim(), data.email(), encryptedPassword);
+        User newUser = new User((data.firstName() + " " + data.lastName()).trim(), data.email(), encryptedPassword);
         this.repository.save(newUser);
         return ResponseEntity.ok().build();
     }

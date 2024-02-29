@@ -29,13 +29,40 @@
         "already-have-account": "Já tem uma conta? ", 
         "log-in": "Entre"
     }, 
+    "register-restaurant": {
+        "register": "Registrar restaurante", 
+        "name": "Nome", 
+        "name-placeholder": "Digite o nome do restaurante...",
+        "description": "Descrição",
+        "description-placeholder": "Descreva o restaurante...", 
+        "website": "Website (opcional)",
+        "website-placeholder": "Cole o link do website do restaurante...",
+        "cep": "CEP", 
+        "cep-placeholder": "Digite o CEP do restaurante...",
+        "create": "Criar restaurante",
+        "street": "Rua",
+        "street-placeholder": "Digite sua Rua...",
+        "neighborhood": "Bairro",
+        "neighborhood-placeholder": "Digite seu Bairro...",
+        "locale": "Logradouro",
+        "locale-placeholder": "Digite seu Logradouro...",
+        "uf": "UF",
+        "uf-placeholder": "Digite sua UF..." 
+
+
+    },
     "navigation": {
-        "label-restaurants": "Restaurantes", 
+        "restaurants": "Criar restaurante", 
         "children-label-restaurant": "Adicionar restaurante", 
         "children-sublabel-resturant": "Cadastre um novo restaurante para votação!", 
         "login": "Entrar", 
         "exit": "Sair",
         "register": "Registrar", 
         "home": "Início"
+    }, 
+    "private-route" : {
+        "not-logged": "Você não está logado", 
+        "authenticate": "Você não está logado. É necessário autenticar-se.", 
+        "ok": "Ok"
     }
 }
