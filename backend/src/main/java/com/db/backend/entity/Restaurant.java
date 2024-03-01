@@ -118,4 +118,18 @@ public class Restaurant {
     public Adress getAdress() {
         return adress;
     }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", website='" + website + '\'' +
+                ", votes=" + votes +
+                ", freeToVote=" + freeToVote +
+                ", avaliableIn=" + avaliableIn +
+                ", adress=" + adress +
+                '}';
+    }
 }

@@ -3,6 +3,7 @@ package com.db.backend.entity;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -20,6 +21,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "votings")
 @Entity(name = "votings")
 @EqualsAndHashCode(of = "id")
+@NoArgsConstructor()
 public class Voting {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -32,14 +34,13 @@ public class Voting {
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(nullable = true)
-    private LocalDateTime startDate;
+    private LocalDateTime startDate = LocalDateTime.now() ;
 
     @Column(nullable = false)
     private boolean isOpen;
 
-    public Voting(Collection<Restaurant> restaurants, LocalDateTime startDate) {
+    public Voting(Collection<Restaurant> restaurants) {
         this.restaurants = restaurants;
-        this.startDate = startDate;
         this.isOpen = true;
     }
 
