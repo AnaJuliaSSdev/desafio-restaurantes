@@ -1,10 +1,8 @@
 import CardRestaurant from "@/components/CardRestaurant/CardRestaurant";
 import { Restaurant, listRestaurant } from "@/lib/requests/listRestaurants";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 
 export function HomePage() {
-  const { t } = useTranslation();
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
 
   useEffect(() => {
@@ -13,7 +11,7 @@ export function HomePage() {
         const restaurantData = await listRestaurant();
         setRestaurants(restaurantData);
       } catch (error) {
-        console.error("Erro ao buscar restaurantes:", error);
+        console.error(error);
       }
     }
 

@@ -4,6 +4,7 @@ import com.db.backend.dto.RestaurantDTO;
 import com.db.backend.entity.Restaurant;
 import com.db.backend.service.RestaurantService;
 import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping("restaurant")
 public class RestaurantController {
+
     @Autowired
     private RestaurantService restaurantService;
 

@@ -64,5 +64,9 @@
         "not-logged": "Você não está logado", 
         "authenticate": "Você não está logado. É necessário autenticar-se.", 
         "ok": "Ok"
+    }, 
+    "messages" : {
+        "creating-user": "Erro ao criar usuário. Por favor, tente novamente mais tarde.",
+        "invalid-cep": "Insira um CEP válido."
     }
 }
