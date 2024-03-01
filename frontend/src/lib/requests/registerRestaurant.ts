@@ -6,6 +6,7 @@ export interface Adress {
     neighborhood: string;
     locale: string;
     uf: string;
+    locationNumber: string;
 }
 
 export async function createRestaurant(name: string, description: string, website: string, adress: Adress): Promise<number> {
