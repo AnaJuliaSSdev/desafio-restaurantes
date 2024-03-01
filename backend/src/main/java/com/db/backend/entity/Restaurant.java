@@ -66,7 +66,7 @@ public class Restaurant {
     }
 
     public void increaseVotes() {
-        ++this.votes;
+        this.votes = this.votes + 1;
     }
 
     public void decreaseVotes() {
