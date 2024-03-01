@@ -38,6 +38,9 @@ public class User implements UserDetails {
     @Column
     private String password;
 
+    @Column
+    private Long restaurantVoted;
+
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
@@ -81,5 +84,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void setRestaurantVoted(Long restaurantVoted) {
+        this.restaurantVoted = restaurantVoted;
+    }
+
+    public Long getRestaurantVoted(){
+        return this.restaurantVoted;
     }
 }
