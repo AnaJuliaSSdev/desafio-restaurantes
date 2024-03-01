@@ -1,5 +1,5 @@
 import CardRestaurant from "@/components/CardRestaurant/CardRestaurant";
-import { Restaurant, listRestaurant } from "@/lib/requests/listRestaurants";
+import { Restaurant, listRestaurantByFreeToVote } from "@/lib/requests/listRestaurants";
 import { useEffect, useState } from "react";
 
 export function HomePage() {
@@ -8,7 +8,7 @@ export function HomePage() {
   useEffect(() => {
     async function fetchRestaurants() {
       try {
-        const restaurantData = await listRestaurant();
+        const restaurantData = await listRestaurantByFreeToVote(true);
         setRestaurants(restaurantData);
       } catch (error) {
         console.error(error);
@@ -22,9 +22,9 @@ export function HomePage() {
     <div className="px-4">
       <div>
         <ul>
-          {restaurants.map((restaurant) => (
+          {restaurants.map((restaurant, index) => (
             <CardRestaurant
-              key={restaurant.name}
+              key={index}
               name={restaurant.name}
               description={restaurant.description}
               website={restaurant.website}

@@ -12,6 +12,8 @@ public record AdressDTO(
         @NotEmpty
         String locale,
         @NotEmpty
-        String uf) {
-
+        String uf,
+        @NotEmpty
+        String locationNumber
+        ) {
 }

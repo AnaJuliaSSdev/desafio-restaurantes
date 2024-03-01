@@ -8,8 +8,8 @@ import { Adress } from "./registerRestaurant";
   adress: Adress
 }
 
-export async function listRestaurant(): Promise<Restaurant[]> {
-  const response =  await http.get("restaurant/getAll", {
+export async function listRestaurantByFreeToVote(isFreeToVote: boolean): Promise<Restaurant[]> {
+  const response =  await http.get(`restaurant/getByFreeToVote/${isFreeToVote}`, {
     headers: { "Content-Type": "application/json" },
   });
 

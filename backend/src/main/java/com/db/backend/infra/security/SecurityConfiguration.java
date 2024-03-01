@@ -36,9 +36,10 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/restaurant/create").permitAll()
-                .requestMatchers(HttpMethod.GET, "/restaurant/getAll").permitAll()
+                .requestMatchers(HttpMethod.GET, "/restaurant/getByFreeToVote/*").permitAll()
+                .requestMatchers("/restaurant/*").permitAll()
                 .requestMatchers(HttpMethod.GET, "/auth/getAllUsers").permitAll()
+                .requestMatchers("/voting/*").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("/test-exception").permitAll()
                 .anyRequest().authenticated()

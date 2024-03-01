@@ -22,7 +22,7 @@ public class RestaurantService {
     public Long saveRestaurant(RestaurantDTO restaurantDTO) {
         // Saving Adress
         AdressDTO adressDTO = restaurantDTO.adress();
-        Adress adress = new Adress(adressDTO.cep(), adressDTO.street(), adressDTO.neighborhood(), adressDTO.locale(), adressDTO.uf());
+        Adress adress = new Adress(adressDTO.cep(), adressDTO.street(), adressDTO.neighborhood(), adressDTO.locale(), adressDTO.uf(), adressDTO.locationNumber());
         Adress savedAdress = this.adressRepository.save(adress);
 
         // Saving Restaurant with Adress
@@ -34,5 +34,10 @@ public class RestaurantService {
     public Collection<Restaurant> getAllRestaurants() {
         Collection<Restaurant> restaurants = this.restaurantRepository.findAll();
         return restaurants;
+    }
+
+    public Collection<Restaurant> getByFreeToVote(boolean isFreeToVote) {
+         Collection<Restaurant> restaurants = this.restaurantRepository.findByFreeToVote(isFreeToVote);
+         return restaurants;
     }
 }

@@ -66,7 +66,7 @@ public class Restaurant {
     }
 
     public void increaseVotes() {
-        ++this.votes;
+        this.votes = this.votes + 1;
     }
 
     public void decreaseVotes() {
@@ -117,5 +117,19 @@ public class Restaurant {
 
     public Adress getAdress() {
         return adress;
+    }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", website='" + website + '\'' +
+                ", votes=" + votes +
+                ", freeToVote=" + freeToVote +
+                ", avaliableIn=" + avaliableIn +
+                ", adress=" + adress +
+                '}';
     }
 }
