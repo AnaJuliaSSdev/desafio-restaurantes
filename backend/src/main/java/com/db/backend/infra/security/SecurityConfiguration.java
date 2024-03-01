@@ -39,6 +39,7 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.GET, "/restaurant/getByFreeToVote/*").permitAll()
                 .requestMatchers("/restaurant/*").permitAll()
                 .requestMatchers(HttpMethod.GET, "/auth/getAllUsers").permitAll()
+                .requestMatchers("/voting/*").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("/test-exception").permitAll()
                 .anyRequest().authenticated()
