@@ -38,6 +38,7 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/restaurant/create").permitAll()
                 .requestMatchers(HttpMethod.GET, "/restaurant/getAll").permitAll()
+                .requestMatchers(HttpMethod.GET, "/auth/getAllUsers").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("/test-exception").permitAll()
                 .anyRequest().authenticated()
