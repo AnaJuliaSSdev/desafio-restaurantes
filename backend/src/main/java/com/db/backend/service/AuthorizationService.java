@@ -28,14 +28,15 @@ public class AuthorizationService implements UserDetailsService {
         User userData = new UserRegistrationConverter().convertDtoToEntity(requestDTO);
 
         if (this.repository.findByEmail(userData.getEmail()) != null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("E-mail already in use", HttpStatus.CONFLICT);
         }
 
         if (requestDTO.password().length() < 8 || requestDTO.password().length() > 12) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Password Invalid", HttpStatus.BAD_REQUEST);
         }
+        
         this.repository.save(userData);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>("User Created", HttpStatus.CREATED);
     }
 
     public ResponseEntity<Collection<User>> getAllUser() {

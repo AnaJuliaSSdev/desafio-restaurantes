@@ -34,15 +34,19 @@ public class Adress {
     @Column(nullable = false)
     private String uf;
 
-    public Adress(String cep, String street, String neighborhood, String locale, String uf) {
+    @Column(nullable = false)
+    private String locationNumber;
+
+    public Adress(String cep, String street, String neighborhood, String locale, String uf, String locationNumber) {
         this.cep = cep;
         this.street = street;
         this.neighborhood = neighborhood;
         this.locale = locale;
         this.uf = uf;
+        this.locationNumber = locationNumber;
     }
 
-    
+
 
     public String getCep() {
         return cep;
@@ -86,5 +90,26 @@ public class Adress {
 
     public Long getId() {
         return id;
+    }
+
+    public String getLocationNumber() {
+        return locationNumber;
+    }
+
+    public void setLocationNumber(String locationNumber) {
+        this.locationNumber = locationNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Adress{" +
+                "id=" + id +
+                ", cep='" + cep + '\'' +
+                ", street='" + street + '\'' +
+                ", neighborhood='" + neighborhood + '\'' +
+                ", locale='" + locale + '\'' +
+                ", uf='" + uf + '\'' +
+                ", locationNumber='" + locationNumber + '\'' +
+                '}';
     }
 }

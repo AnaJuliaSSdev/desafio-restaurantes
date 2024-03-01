@@ -20,10 +20,7 @@ import com.db.backend.entity.Adress;
 import com.db.backend.entity.Restaurant;
 import com.db.backend.repository.AdressRepository;
 import com.db.backend.repository.RestaurantRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @SpringBootTest
@@ -41,8 +38,8 @@ class RestaurantControllerUnitTest {
 
     @Test
     void createRestaurantSuccess() throws Exception {
-        AdressDTO adressDTO = new AdressDTO("01001000", "Praça da Sé", "Sé", "São Paulo", "SP");
-        Adress address = new Adress("01001000", "Praça da Sé", "Sé", "São Paulo", "SP");
+        AdressDTO adressDTO = new AdressDTO("01001000", "Praça da Sé", "Sé", "São Paulo", "SP", "20");
+        Adress address = new Adress("01001000", "Praça da Sé", "Sé", "São Paulo", "SP", "20");
 
         Restaurant restaurant = new Restaurant("name", "description", "website", address);
         RestaurantDTO restaurantDTO = new RestaurantDTO("name", "description", "website", adressDTO);
