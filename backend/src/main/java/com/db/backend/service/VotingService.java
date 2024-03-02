@@ -31,6 +31,9 @@ public class VotingService {
     @Autowired
     RestaurantRepository restaurantRepository;
 
+    @Autowired
+    VotingRepository votingRepository;
+
     public void createVoting() {
         Collection<Restaurant> restaurants = restaurantService.getByFreeToVote(true);
         Voting voting = new Voting(restaurants);
@@ -76,6 +79,14 @@ public class VotingService {
             }
             restaurant.increaseVotes();
             user.setRestaurantVoted(restaurant.getId());
+        }
+    }
+
+    public void closeOpenVoting() {
+        Voting voting = votingRepository.findByIsOpen(true);
+        if (voting != null) {
+            voting.setOpen(false);
+            votingRepository.save(voting);
         }
     }
 }
