@@ -14,7 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class VotingService {
@@ -34,10 +38,25 @@ public class VotingService {
     @Autowired
     VotingRepository votingRepository;
 
-    public void createVoting() {
+    public void createVoting() throws Exception {
+        if (verifyVotingsDay()) {
+            throw new Exception();
+        }
+
         Collection<Restaurant> restaurants = restaurantService.getByFreeToVote(true);
         Voting voting = new Voting(restaurants);
         this.repository.save(voting);
+    }
+
+    public boolean verifyVotingsDay() {
+        LocalDate today = LocalDate.now();
+        LocalDateTime startOfDay = today.atStartOfDay();
+        LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
+
+        Optional<Voting> openVoting = votingRepository.findFirstByStartDateBetweenOrderByStartDateDesc(startOfDay,
+                endOfDay);
+
+        return openVoting.isPresent() && openVoting.get().getStartDate().toLocalDate().equals(today);
     }
 
     public Collection<Voting> getAllVoting() {

@@ -1,4 +1,5 @@
 import { Restaurant } from "@/lib/requests/listRestaurants";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 import {
   Card,
   Image,
@@ -11,7 +12,7 @@ import {
   Grid,
 } from "@chakra-ui/react";
 
-export default function CardRestaurant(prop: Restaurant) {
+export default function CardRestaurant(prop: Readonly<Restaurant>) {
   return (
     <Card
       marginBottom="30px"
@@ -32,11 +33,20 @@ export default function CardRestaurant(prop: Restaurant) {
         />
         <Stack position="relative">
           <CardBody>
-            <Heading size="md">{prop.name}</Heading>
+            <Heading size="md">
+              {prop.name}
+              {prop.website && (
+                <a href={prop.website}>
+                  <ExternalLinkIcon />
+                </a>
+              )}
+              {prop.website}
+            </Heading>
             <Text py="2">
               Descrição: {prop.description} <br />
-              Endereço: {prop.adress.uf}, {prop.adress.locale},{" "}
-              {prop.adress.neighborhood}, {prop.adress.street}
+              Endereço: {prop.adress.uf}, {prop.adress.locale},
+              {prop.adress.neighborhood}, {prop.adress.street},
+              {prop.adress.locationNumber}
             </Text>
           </CardBody>
           <CardFooter position="absolute" top="0" right="0">

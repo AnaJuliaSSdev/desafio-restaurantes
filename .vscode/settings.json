@@ -12,5 +12,8 @@
   "java.dependency.packagePresentation": "hierarchical",
   "terminal.integrated.fontSize": 18,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "java.configuration.updateBuildConfiguration": "interactive"
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java"
+  }
 }

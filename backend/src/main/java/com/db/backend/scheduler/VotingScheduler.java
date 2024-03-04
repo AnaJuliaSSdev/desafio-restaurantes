@@ -15,4 +15,5 @@ public class VotingScheduler {
     public void closeOpenVoting() {
         votingService.closeOpenVoting();
     }
+
 }
