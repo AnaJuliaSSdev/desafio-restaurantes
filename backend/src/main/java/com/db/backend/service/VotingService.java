@@ -7,11 +7,9 @@ import com.db.backend.repository.RestaurantRepository;
 import com.db.backend.repository.UserRepository;
 import com.db.backend.repository.VotingRepository;
 
-import org.springframework.http.HttpStatus;
 import lombok.NonNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -40,7 +38,7 @@ public class VotingService {
 
     public void createVoting() throws Exception {
         if (verifyVotingsDay()) {
-            throw new Exception();
+            throw new Exception("Limit of one vote per day has been reached.");
         }
 
         Collection<Restaurant> restaurants = restaurantService.getByFreeToVote(true);
@@ -63,7 +61,7 @@ public class VotingService {
         return this.repository.findAll();
     }
 
-    public ResponseEntity<String> userVote(@NonNull Long idUser, @NonNull Long idRestaurant) {
+    public void userVote(@NonNull Long idUser, @NonNull Long idRestaurant) throws Exception {
         User user = userRepository.findById(idUser)
                 .orElse(null);
 
@@ -71,15 +69,13 @@ public class VotingService {
                 .orElse(null);
 
         if (user == null || restaurant == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new Exception("Invalid ID provided.");
         }
 
         processVote(user, restaurant);
 
         userRepository.save(user);
         restaurantRepository.save(restaurant);
-
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     private void processVote(User user, Restaurant restaurant) {
@@ -101,11 +97,15 @@ public class VotingService {
         }
     }
 
-    public void closeOpenVoting() {
+    public void closeOpenVoting() throws Exception {
         Voting voting = votingRepository.findByIsOpen(true);
-        if (voting != null) {
-            voting.setOpen(false);
-            votingRepository.save(voting);
+        try {
+            if (voting != null) {
+                voting.setOpen(false);
+                votingRepository.save(voting);
+            }
+        } catch (Exception e) {
+            throw new Exception("Unable to close the voting.");
         }
     }
 }
