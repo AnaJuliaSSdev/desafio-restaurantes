@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Optional;
 
 @Service
@@ -106,6 +107,27 @@ public class VotingService {
             }
         } catch (Exception e) {
             throw new Exception("Unable to close the voting.");
+        }
+    }
+
+    public Restaurant verifyWinner() throws Exception {
+        try {
+            Voting openVoting = votingRepository.findByIsOpen(true);
+            if (openVoting == null) {
+                throw new Exception("No open voting found.");
+            }
+
+            Collection<Restaurant> restaurants = openVoting.getRestaurants();
+
+            Restaurant winner = restaurants.stream()
+                    .max(Comparator.comparingInt(Restaurant::getVotes))
+                    .orElseThrow(() -> new Exception("No winner restaurant found."));
+
+            openVoting.setWinner(winner);
+
+            return winner;
+        } catch (Exception e) {
+            throw new Exception("No winner found.");
         }
     }
 }

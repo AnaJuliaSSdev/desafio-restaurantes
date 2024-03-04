@@ -13,7 +13,7 @@ public class VotingScheduler {
     @Autowired
     private VotingService votingService;
 
-    @Scheduled(cron = "0 0 11 * * *")
+    @Scheduled(cron = "0 07 18 * * *")
     public ResponseEntity<String> closeOpenVoting() {
         try {
             votingService.closeOpenVoting();
@@ -23,4 +23,13 @@ public class VotingScheduler {
         }
     }
 
+    @Scheduled(cron = "0 07 18 * * *")
+    public ResponseEntity<String> verifyWinner() {
+        try {
+            votingService.verifyWinner();
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

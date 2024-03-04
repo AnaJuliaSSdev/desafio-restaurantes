@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 import lombok.NoArgsConstructor;
+
+import org.hibernate.annotations.ManyToAny;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -14,6 +16,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
@@ -38,6 +42,10 @@ public class Voting {
 
     @Column(nullable = false)
     private boolean isOpen;
+
+    @JoinColumn(name = "restaurant_id")
+    @ManyToOne
+    private Restaurant winner;
 
     public Voting(Collection<Restaurant> restaurants) {
         this.restaurants = restaurants;
@@ -66,6 +74,14 @@ public class Voting {
 
     public void setOpen(boolean isOpen) {
         this.isOpen = isOpen;
+    }
+
+    public Restaurant getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Restaurant winner) {
+        this.winner = winner;
     }
 
 }
