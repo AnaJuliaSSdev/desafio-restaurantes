@@ -33,20 +33,18 @@ export default function CardRestaurant(prop: Readonly<Restaurant>) {
         />
         <Stack position="relative">
           <CardBody>
-            <Heading size="md">
-              {prop.name}
-              {prop.website && (
-                <a href={prop.website}>
-                  <ExternalLinkIcon />
-                </a>
-              )}
-              {prop.website}
-            </Heading>
+            <Heading size="md">{prop.name}</Heading>
             <Text py="2">
               Descrição: {prop.description} <br />
               Endereço: {prop.adress.uf}, {prop.adress.locale},
               {prop.adress.neighborhood}, {prop.adress.street},
-              {prop.adress.locationNumber}
+              {prop.adress.locationNumber} <br></br>
+              Votos: {prop.votes} <br></br>
+              {prop.website ? (
+                <a href={prop.website} target="_blank">
+                  <ExternalLinkIcon />
+                </a>
+              ) : null}
             </Text>
           </CardBody>
           <CardFooter position="absolute" top="0" right="0">

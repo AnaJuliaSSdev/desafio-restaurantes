@@ -77,21 +77,19 @@ export function RegisterRestaurantPage() {
       return;
     }
     try {
-      createRestaurant(name, description, website, {
+      await createRestaurant(name, description, website, {
         cep,
         street,
         neighborhood,
         locale,
         uf,
-        locationNumber
+        locationNumber,
       });
       setMessage({
         type: "success",
         description: "Restaurante cadastrado com sucesso!",
       });
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
+      navigate("/");
     } catch (error) {
       setMessage({
         type: "warning",

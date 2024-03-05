@@ -1,5 +1,8 @@
 import CardRestaurant from "@/components/CardRestaurant/CardRestaurant";
-import { Restaurant, listRestaurantByFreeToVote } from "@/lib/requests/listRestaurants";
+import {
+  Restaurant,
+  listRestaurantByFreeToVote,
+} from "@/lib/requests/listRestaurants";
 import { useEffect, useState } from "react";
 
 export function HomePage() {
@@ -29,6 +32,7 @@ export function HomePage() {
               description={restaurant.description}
               website={restaurant.website}
               adress={restaurant.adress}
+              votes={restaurant.votes}
             />
           ))}
         </ul>
