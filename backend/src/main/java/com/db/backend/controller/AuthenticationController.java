@@ -2,6 +2,7 @@ package com.db.backend.controller;
 
 import com.db.backend.service.AuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,6 +13,7 @@ import com.db.backend.dto.UserRegistrationRequestDTO;
 import com.db.backend.dto.UserRegistrationResponseDTO;
 import com.db.backend.entity.User;
 import com.db.backend.infra.security.JwtService;
+import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.validation.Valid;
 
@@ -40,11 +42,21 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody @Valid UserRegistrationRequestDTO data) {
-        return authorizationService.registerUser(data);
+        try {
+            authorizationService.registerUser(data);
+            return new ResponseEntity<>("User Created", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/getAllUsers")
     public ResponseEntity<Collection<User>> getAllUsers() {
-        return authorizationService.getAllUser();
+        try {
+            Collection<User> users = authorizationService.getAllUser();
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

@@ -1,10 +1,11 @@
 package com.db.backend.scheduler;
 
 import com.db.backend.entity.Restaurant;
-import com.db.backend.service.RestaurantService;
+import com.db.backend.entity.Voting;
+import com.db.backend.repository.VotingRepository;
 import com.db.backend.service.VotingService;
 
-import java.util.Collection;
+import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,11 +17,19 @@ public class VotingScheduler {
     private VotingService votingService;
 
     @Autowired
-    private RestaurantService restaurantService;
+    private VotingRepository votingRepository;
 
-    @Scheduled(fixedDelay = 1000 * 10)
-    public void scheduledTask() {
-        Collection<Restaurant> restaurants = restaurantService.getByFreeToVote(true);
-        System.out.println(restaurants.toString());
+    @Transactional
+    @Scheduled(cron = "0 38 14 * * *")
+    public void endCurrentVoting() throws Exception {
+        Voting voting = votingRepository.findByIsOpen(true);
+        try {
+            Restaurant currentWinner = votingService.verifyWinner(voting);
+            votingService.calculateAvaliableIn(currentWinner);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        } finally {
+            votingService.closeOpenVoting(voting);
+        }
     }
 }
