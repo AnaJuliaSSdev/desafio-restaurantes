@@ -23,8 +23,12 @@ public class VotingController {
 
     @PostMapping("/startVoting")
     public ResponseEntity<String> startNewVoting() {
-        this.votingService.createVoting();
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            this.votingService.createVoting();
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/getAllVoting")
@@ -34,7 +38,7 @@ public class VotingController {
     }
 
     @PutMapping("/userVote/{idRestaurant}")
-    public ResponseEntity<RestaurantDTO> userVote(@PathVariable long idRestaurant){
+    public ResponseEntity<RestaurantDTO> userVote(@PathVariable long idRestaurant) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
         Long idUser = user.getId();

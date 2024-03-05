@@ -5,10 +5,9 @@ import { useTranslation } from "react-i18next";
 export function Navigation() {
   const { t } = useTranslation();
   const { accessToken, updateAccessToken } = useAuth();
-  console.log(accessToken)
   return (
     <Flex
-      minWidth="max-content"  
+      minWidth="max-content"
       as="nav"
       align="center"
       justify="space-between"

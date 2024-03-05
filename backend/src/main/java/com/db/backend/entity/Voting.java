@@ -34,7 +34,7 @@ public class Voting {
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(nullable = true)
-    private LocalDateTime startDate = LocalDateTime.now() ;
+    private LocalDateTime startDate = LocalDateTime.now();
 
     @Column(nullable = false)
     private boolean isOpen;
