@@ -22,18 +22,21 @@ public class RestaurantService {
     @Autowired
     private AdressRepository adressRepository;
 
-    public Long saveRestaurant(RestaurantDTO restaurantDTO) {
-        // Saving Adress
-        AdressDTO adressDTO = restaurantDTO.adress();
-        Adress adress = new Adress(adressDTO.cep(), adressDTO.street(), adressDTO.neighborhood(), adressDTO.locale(),
-                adressDTO.uf(), adressDTO.locationNumber());
-        Adress savedAdress = this.adressRepository.save(adress);
+    public Long createRestaurant(RestaurantDTO restaurantDTO) throws Exception {
+        try {
+            AdressDTO adressDTO = restaurantDTO.adress();
+            Adress adress = new Adress(adressDTO.cep(), adressDTO.street(), adressDTO.neighborhood(),
+                    adressDTO.locale(),
+                    adressDTO.uf(), adressDTO.locationNumber());
+            Adress savedAdress = this.adressRepository.save(adress);
 
-        // Saving Restaurant with Adress
-        Restaurant restaurant = new Restaurant(restaurantDTO.name(), restaurantDTO.description(),
-                restaurantDTO.description(), savedAdress);
-        Restaurant savedRestaurant = this.restaurantRepository.save(restaurant);
-        return savedRestaurant.getId();
+            Restaurant restaurant = new Restaurant(restaurantDTO.name(), restaurantDTO.description(),
+                    restaurantDTO.description(), savedAdress);
+            Restaurant savedRestaurant = this.restaurantRepository.save(restaurant);
+            return savedRestaurant.getId();
+        } catch (Exception e) {
+            throw new Exception("Unable to create the restaurant.");
+        }
     }
 
     public Collection<Restaurant> getAllRestaurants() {
@@ -41,12 +44,15 @@ public class RestaurantService {
         return restaurants;
     }
 
-    public Collection<Restaurant> getByFreeToVote(boolean isFreeToVote) {
-        Collection<Restaurant> restaurants = this.restaurantRepository.findByFreeToVote(isFreeToVote);
+    public Collection<Restaurant> getByFreeToVote(boolean isFreeToVote) throws Exception {
+        try {
+            Collection<Restaurant> restaurants = this.restaurantRepository.findByFreeToVote(isFreeToVote);
 
-        ArrayList<Restaurant> sortedRestaurants = new ArrayList<>(restaurants);
-        Collections.sort(sortedRestaurants, Comparator.comparingInt(Restaurant::getVotes).reversed());
-
-        return sortedRestaurants;
+            ArrayList<Restaurant> sortedRestaurants = new ArrayList<>(restaurants);
+            Collections.sort(sortedRestaurants, Comparator.comparingInt(Restaurant::getVotes).reversed());
+            return sortedRestaurants;
+        } catch (Exception e) {
+            throw new Exception("Unable to find restaurants.");
+        }
     }
 }

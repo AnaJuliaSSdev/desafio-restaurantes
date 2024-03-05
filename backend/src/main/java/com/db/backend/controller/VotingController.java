@@ -9,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import com.db.backend.dto.RestaurantDTO;
 import com.db.backend.entity.User;
 import com.db.backend.entity.Voting;
 import com.db.backend.service.VotingService;
@@ -38,11 +37,15 @@ public class VotingController {
     }
 
     @PutMapping("/userVote/{idRestaurant}")
-    public ResponseEntity<RestaurantDTO> userVote(@PathVariable long idRestaurant) {
+    public ResponseEntity<String> userVote(@PathVariable long idRestaurant) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
         Long idUser = user.getId();
-        this.votingService.userVote(idUser, idRestaurant);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            this.votingService.userVote(idUser, idRestaurant);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }
