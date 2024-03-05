@@ -1,5 +1,6 @@
 package com.db.backend.scheduler;
 
+import com.db.backend.entity.Restaurant;
 import com.db.backend.entity.Voting;
 import com.db.backend.repository.VotingRepository;
 import com.db.backend.service.VotingService;
@@ -19,11 +20,12 @@ public class VotingScheduler {
     private VotingRepository votingRepository;
 
     @Transactional
-    @Scheduled(cron = "0 23 11 * * *")
+    @Scheduled(cron = "0 38 14 * * *")
     public void endCurrentVoting() throws Exception {
         Voting voting = votingRepository.findByIsOpen(true);
         try {
-            votingService.verifyWinner(voting);
+            Restaurant currentWinner = votingService.verifyWinner(voting);
+            votingService.calculateAvaliableIn(currentWinner);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         } finally {

@@ -124,7 +124,7 @@ public class VotingService {
         }
     }
 
-    public void verifyWinner(Voting voting) throws Exception {
+    public Restaurant verifyWinner(Voting voting) throws Exception {
         try {
             if (voting == null) {
                 throw new Exception("No open voting found.");
@@ -148,8 +148,19 @@ public class VotingService {
 
             voting.setWinner(winner);
 
+            return winner;
+
         } catch (Exception e) {
             throw new Exception("Failed to set a winner" + e.getMessage());
         }
     }
+
+    public void calculateAvaliableIn(Restaurant currentWinner) {
+        LocalDateTime currentDate = LocalDateTime.now();
+        int oneWeek = 7;
+        LocalDateTime avaliableIn = currentDate.plusDays(oneWeek);
+
+        currentWinner.setAvaliableIn(avaliableIn);
+    }
+
 }

@@ -31,7 +31,7 @@ public class Voting {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Restaurant> restaurants;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
