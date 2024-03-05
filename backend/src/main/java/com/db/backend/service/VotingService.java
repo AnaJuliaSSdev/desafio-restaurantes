@@ -88,6 +88,10 @@ public class VotingService {
             throw new Exception("Invalid ID provided.");
         }
 
+        if (restaurant.isFreeToVote() == false) {
+            throw new Exception("Restaurant not avaliable to vote.");
+        }
+
         processVote(user, restaurant);
 
         userRepository.save(user);
