@@ -1,4 +1,5 @@
 import { Restaurant } from "@/lib/requests/listRestaurants";
+import { userVote } from "@/lib/requests/vote";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import {
   Card,
@@ -13,6 +14,14 @@ import {
 } from "@chakra-ui/react";
 
 export default function CardRestaurant(prop: Readonly<Restaurant>) {
+  const handleVote = async (id_restaurant: number) => {
+    try {
+      await userVote(id_restaurant);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Card
       marginBottom="30px"
@@ -48,7 +57,14 @@ export default function CardRestaurant(prop: Readonly<Restaurant>) {
             </Text>
           </CardBody>
           <CardFooter position="absolute" top="0" right="0">
-            <Button className="button-submit">Vote</Button>
+            <Button
+              onClick={() => {
+                handleVote(prop.id);
+              }}
+              className="button-submit"
+            >
+              Vote
+            </Button>
           </CardFooter>
         </Stack>
       </Grid>

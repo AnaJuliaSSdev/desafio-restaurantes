@@ -2,6 +2,7 @@ import { http } from "./http";
 import { Adress } from "./registerRestaurant";
 
 export interface Restaurant {
+  id: number;
   name: string;
   description: string;
   website: string | null;

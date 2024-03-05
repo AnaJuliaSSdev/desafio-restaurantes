@@ -33,6 +33,7 @@ export function HomePage() {
               website={restaurant.website}
               adress={restaurant.adress}
               votes={restaurant.votes}
+              id={restaurant.id}
             />
           ))}
         </ul>
