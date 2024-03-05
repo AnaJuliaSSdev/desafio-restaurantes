@@ -4,8 +4,11 @@ import com.db.backend.dto.AdressDTO;
 import com.db.backend.dto.RestaurantDTO;
 import com.db.backend.entity.Adress;
 import com.db.backend.entity.Restaurant;
+import com.db.backend.entity.Voting;
 import com.db.backend.repository.AdressRepository;
 import com.db.backend.repository.RestaurantRepository;
+import com.db.backend.repository.VotingRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,9 @@ public class RestaurantService {
     @Autowired
     private AdressRepository adressRepository;
 
+    @Autowired
+    private VotingRepository votingRepository;
+
     public Long createRestaurant(RestaurantDTO restaurantDTO) throws Exception {
         try {
             AdressDTO adressDTO = restaurantDTO.adress();
@@ -33,6 +39,14 @@ public class RestaurantService {
             Restaurant restaurant = new Restaurant(restaurantDTO.name(), restaurantDTO.description(),
                     restaurantDTO.description(), savedAdress);
             Restaurant savedRestaurant = this.restaurantRepository.save(restaurant);
+
+            Voting openVoting = votingRepository.findByIsOpen(true);
+
+            if (openVoting != null) {
+                openVoting.addRestaurant(restaurant);
+                votingRepository.save(openVoting);
+            }
+
             return savedRestaurant.getId();
         } catch (Exception e) {
             throw new Exception("Unable to create the restaurant.");
