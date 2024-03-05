@@ -20,12 +20,16 @@ public class VotingScheduler {
     private VotingRepository votingRepository;
 
     @Transactional
-    @Scheduled(cron = "0 38 14 * * *")
+    @Scheduled(cron = "0 07 16 * * *")
     public void endCurrentVoting() throws Exception {
         Voting voting = votingRepository.findByIsOpen(true);
         try {
             Restaurant currentWinner = votingService.verifyWinner(voting);
             votingService.calculateAvaliableIn(currentWinner);
+            votingService.resetVotes(voting);
+            votingService.closeVoting(voting);
+
+            votingService.verifyAvaliableIn();
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         } finally {

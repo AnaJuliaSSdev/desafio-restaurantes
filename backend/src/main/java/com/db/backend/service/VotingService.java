@@ -157,10 +157,33 @@ public class VotingService {
 
     public void calculateAvaliableIn(Restaurant currentWinner) {
         LocalDateTime currentDate = LocalDateTime.now();
-        int oneWeek = 7;
-        LocalDateTime avaliableIn = currentDate.plusDays(oneWeek);
+        LocalDateTime avaliableIn = currentDate.plusWeeks(1);
 
         currentWinner.setAvaliableIn(avaliableIn);
+        currentWinner.setFreeToVote(false);
+        restaurantRepository.save(currentWinner);
     }
 
+    public void verifyAvaliableIn() {
+        LocalDate currentDate = LocalDate.now();
+        Collection<Restaurant> restaurants = restaurantRepository.findByFreeToVote(false);
+
+        restaurants.stream()
+                .filter(restaurant -> restaurant.getAvaliableIn().toLocalDate().equals(currentDate))
+                .forEach(restaurant -> {
+                    restaurant.setAvaliableIn(null);
+                    restaurant.setFreeToVote(true);
+                    restaurantRepository.save(restaurant);
+                });
+    }
+
+    public void resetVotes(Voting voting) {
+        Collection<Restaurant> restaurants = voting.getRestaurants();
+        restaurants.stream().forEach(Restaurant::resetVotes);
+    }
+
+    public void closeVoting(Voting voting) {
+        voting.setOpen(false);
+        votingRepository.save(voting);
+    }
 }
