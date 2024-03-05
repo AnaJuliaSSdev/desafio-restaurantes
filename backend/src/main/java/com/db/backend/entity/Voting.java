@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import lombok.NoArgsConstructor;
 
-import org.hibernate.annotations.ManyToAny;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,12 +12,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 
@@ -31,8 +31,7 @@ public class Voting {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(nullable = true)
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Restaurant> restaurants;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
@@ -43,8 +42,8 @@ public class Voting {
     @Column(nullable = false)
     private boolean isOpen;
 
-    @JoinColumn(name = "restaurant_id")
-    @ManyToOne
+    @OneToOne
+    @JoinColumn(name = "winner_id")
     private Restaurant winner;
 
     public Voting(Collection<Restaurant> restaurants) {
@@ -56,8 +55,8 @@ public class Voting {
         return restaurants;
     }
 
-    public void setRestaurants(Collection<Restaurant> restaurants) {
-        this.restaurants = restaurants;
+    public void addRestaurant(Restaurant restaurant) {
+        this.restaurants.add(restaurant);
     }
 
     public LocalDateTime getStartDate() {

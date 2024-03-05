@@ -18,6 +18,8 @@ import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.List;
 
 @Service
 public class VotingService {
@@ -66,8 +68,21 @@ public class VotingService {
         User user = userRepository.findById(idUser)
                 .orElse(null);
 
-        Restaurant restaurant = restaurantRepository.findById(idRestaurant)
-                .orElse(null);
+        Voting openVoting = votingRepository.findByIsOpen(true);
+
+        if (openVoting == null) {
+            throw new Exception("There is no open voting.");
+        }
+
+        Collection<Restaurant> restaurants = openVoting.getRestaurants();
+
+        if (restaurants == null) {
+            throw new Exception("There is no restaurants in this voting.");
+        }
+
+        Restaurant restaurant = restaurants.stream()
+                .filter(r -> r.getId().equals(idRestaurant))
+                .findFirst().orElseThrow(() -> new Exception("Restaurant not registered in this voting."));
 
         if (user == null || restaurant == null) {
             throw new Exception("Invalid ID provided.");
@@ -98,8 +113,7 @@ public class VotingService {
         }
     }
 
-    public void closeOpenVoting() throws Exception {
-        Voting voting = votingRepository.findByIsOpen(true);
+    public void closeOpenVoting(Voting voting) throws Exception {
         try {
             if (voting != null) {
                 voting.setOpen(false);
@@ -110,24 +124,32 @@ public class VotingService {
         }
     }
 
-    public Restaurant verifyWinner() throws Exception {
+    public void verifyWinner(Voting voting) throws Exception {
         try {
-            Voting openVoting = votingRepository.findByIsOpen(true);
-            if (openVoting == null) {
+            if (voting == null) {
                 throw new Exception("No open voting found.");
             }
 
-            Collection<Restaurant> restaurants = openVoting.getRestaurants();
+            Collection<Restaurant> restaurants = voting.getRestaurants();
 
-            Restaurant winner = restaurants.stream()
-                    .max(Comparator.comparingInt(Restaurant::getVotes))
-                    .orElseThrow(() -> new Exception("No winner restaurant found."));
+            for (Restaurant restaurant : restaurants) {
+                System.out.println("Restaurante ID: " + restaurant.getId() + ", Votos: " + restaurant.getVotes());
+            }
 
-            openVoting.setWinner(winner);
+            if (restaurants == null) {
+                throw new Exception("No restaurants are registered in this voting.");
+            }
 
-            return winner;
+            List<Restaurant> sortedRestaurants = restaurants.stream()
+                    .sorted(Comparator.comparingInt(Restaurant::getVotes).reversed())
+                    .collect(Collectors.toList());
+
+            Restaurant winner = sortedRestaurants.get(0);
+
+            voting.setWinner(winner);
+
         } catch (Exception e) {
-            throw new Exception("No winner found.");
+            throw new Exception("Failed to set a winner" + e.getMessage());
         }
     }
 }

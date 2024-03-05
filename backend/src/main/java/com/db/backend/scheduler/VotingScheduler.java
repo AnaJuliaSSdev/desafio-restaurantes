@@ -1,10 +1,12 @@
 package com.db.backend.scheduler;
 
+import com.db.backend.entity.Voting;
+import com.db.backend.repository.VotingRepository;
 import com.db.backend.service.VotingService;
 
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -13,23 +15,19 @@ public class VotingScheduler {
     @Autowired
     private VotingService votingService;
 
-    @Scheduled(cron = "0 07 18 * * *")
-    public ResponseEntity<String> closeOpenVoting() {
-        try {
-            votingService.closeOpenVoting();
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
+    @Autowired
+    private VotingRepository votingRepository;
 
-    @Scheduled(cron = "0 07 18 * * *")
-    public ResponseEntity<String> verifyWinner() {
+    @Transactional
+    @Scheduled(cron = "0 23 11 * * *")
+    public void endCurrentVoting() throws Exception {
+        Voting voting = votingRepository.findByIsOpen(true);
         try {
-            votingService.verifyWinner();
-            return new ResponseEntity<>(HttpStatus.OK);
+            votingService.verifyWinner(voting);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            throw new Exception(e.getMessage());
+        } finally {
+            votingService.closeOpenVoting(voting);
         }
     }
 }
