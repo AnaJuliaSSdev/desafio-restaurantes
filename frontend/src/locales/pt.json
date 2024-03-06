@@ -4,7 +4,8 @@
     "home": "Início",
     "login": "Entrar",
     "register": "Registrar",
-    "exit": "Sair"
+    "exit": "Sair",
+    "start-voting": "Começar votação"
   },
   "authenticate": {
     "login": "Entrar",
@@ -58,7 +59,8 @@
     "login": "Entrar",
     "exit": "Sair",
     "register": "Registrar",
-    "home": "Início"
+    "home": "Início",
+    "votings": "Votações"
   },
   "private-route": {
     "not-logged": "Você não está logado",

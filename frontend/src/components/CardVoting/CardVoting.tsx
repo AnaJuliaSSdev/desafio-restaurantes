@@ -32,10 +32,11 @@ export default function CardVoting(prop: Readonly<VotingI>) {
         <Stack position="relative">
           <CardBody>
             <Heading size="md">Votação iniciada em: {prop.startDate}</Heading>
+            Votação em aberto: {prop.isOpen ? "Sim" : "Não"}
+            <br></br>
             Resultado: {prop.isOpen ? " Parcial" : " Final"}
-            {prop.isOpen &&
-              prop.winner &&
-              `Restaurante vencedor: ${prop.winner.name}, ${prop.winner.votes} votos!`}
+            <br></br>
+            {prop.winner && `Restaurante vencedor: ${prop.winner.name}`}
             <Text py="2"></Text>
           </CardBody>
           <CardFooter position="absolute" top="0" right="0"></CardFooter>

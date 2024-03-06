@@ -20,6 +20,7 @@ export function Navigation() {
         <Flex flexDirection={"row"} gap={5}>
           <Link href="/">{t("navigation.home")}</Link>
           <Link href="restaurant/register">{t("navigation.restaurants")}</Link>
+          <Link href="votings/list">{t("navigation.votings")}</Link>
         </Flex>
       </Box>
       <ButtonGroup p={1} gap="4">
