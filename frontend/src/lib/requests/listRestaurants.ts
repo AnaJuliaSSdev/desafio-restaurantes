@@ -1,14 +1,5 @@
+import { Restaurant } from "../interfaces/RestauranteI";
 import { http } from "./http";
-import { Adress } from "./registerRestaurant";
-
-export interface Restaurant {
-  id: number;
-  name: string;
-  description: string;
-  website: string | null;
-  adress: Adress;
-  votes: number;
-}
 
 export async function listRestaurantByFreeToVote(
   isFreeToVote: boolean

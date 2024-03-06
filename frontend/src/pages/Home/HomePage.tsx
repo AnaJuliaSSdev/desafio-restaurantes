@@ -1,8 +1,8 @@
 import CardRestaurant from "@/components/CardRestaurant/CardRestaurant";
-import {
-  Restaurant,
-  listRestaurantByFreeToVote,
-} from "@/lib/requests/listRestaurants";
+import { Restaurant } from "@/lib/interfaces/RestauranteI";
+import { listRestaurantByFreeToVote } from "@/lib/requests/listRestaurants";
+import { startVoting } from "@/lib/requests/vote";
+import { Button } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 export function HomePage() {
@@ -21,13 +21,25 @@ export function HomePage() {
     fetchRestaurants();
   }, []);
 
+  const handleStartVoting = async () => {
+    try {
+      await startVoting();
+      console.log("votação iniciada");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="px-4">
+      <Button onClick={handleStartVoting} className="button-submit">
+        Start Voting
+      </Button>
       <div>
         <ul>
-          {restaurants.map((restaurant, index) => (
+          {restaurants.map((restaurant) => (
             <CardRestaurant
-              key={index}
+              key={restaurant.id}
               name={restaurant.name}
               description={restaurant.description}
               website={restaurant.website}

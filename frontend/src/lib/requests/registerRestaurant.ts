@@ -1,13 +1,5 @@
+import { Adress } from "../interfaces/AdressI";
 import { http } from "./http";
-
-export interface Adress {
-  cep: string;
-  street: string;
-  neighborhood: string;
-  locale: string;
-  uf: string;
-  locationNumber: string;
-}
 
 export async function createRestaurant(
   name: string,

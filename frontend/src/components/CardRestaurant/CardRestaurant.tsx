@@ -1,4 +1,4 @@
-import { Restaurant } from "@/lib/requests/listRestaurants";
+import { Restaurant } from "@/lib/interfaces/RestauranteI";
 import { userVote } from "@/lib/requests/vote";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import {
@@ -12,15 +12,20 @@ import {
   Button,
   Grid,
 } from "@chakra-ui/react";
+import { useState } from "react";
 
 export default function CardRestaurant(prop: Readonly<Restaurant>) {
   const handleVote = async (id_restaurant: number) => {
     try {
       await userVote(id_restaurant);
+      setVotes(prop.votes);
+      location.reload();
     } catch (error) {
       console.log(error);
     }
   };
+
+  const [votes, setVotes] = useState(prop.votes);
 
   return (
     <Card
@@ -48,7 +53,7 @@ export default function CardRestaurant(prop: Readonly<Restaurant>) {
               Endereço: {prop.adress.uf}, {prop.adress.locale},
               {prop.adress.neighborhood}, {prop.adress.street},
               {prop.adress.locationNumber} <br></br>
-              Votos: {prop.votes} <br></br>
+              Votos: {votes} <br></br>
               {prop.website ? (
                 <a href={prop.website} target="_blank">
                   <ExternalLinkIcon />
