@@ -20,7 +20,7 @@ public class VotingScheduler {
     private VotingRepository votingRepository;
 
     @Transactional
-    @Scheduled(cron = "0 07 16 * * *")
+    @Scheduled(cron = "0 03 12 * * *")
     public void endCurrentVoting() throws Exception {
         Voting voting = votingRepository.findByIsOpen(true);
         try {

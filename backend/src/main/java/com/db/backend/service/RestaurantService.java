@@ -37,7 +37,7 @@ public class RestaurantService {
             Adress savedAdress = this.adressRepository.save(adress);
 
             Restaurant restaurant = new Restaurant(restaurantDTO.name(), restaurantDTO.description(),
-                    restaurantDTO.description(), savedAdress);
+                    restaurantDTO.website(), savedAdress);
             Restaurant savedRestaurant = this.restaurantRepository.save(restaurant);
 
             Voting openVoting = votingRepository.findByIsOpen(true);
