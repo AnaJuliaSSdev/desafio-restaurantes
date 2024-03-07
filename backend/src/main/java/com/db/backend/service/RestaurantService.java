@@ -1,11 +1,11 @@
 package com.db.backend.service;
 
-import com.db.backend.dto.AdressDTO;
+import com.db.backend.dto.AddressDTO;
 import com.db.backend.dto.RestaurantDTO;
-import com.db.backend.entity.Adress;
+import com.db.backend.entity.Address;
 import com.db.backend.entity.Restaurant;
 import com.db.backend.entity.Voting;
-import com.db.backend.repository.AdressRepository;
+import com.db.backend.repository.AddressRepository;
 import com.db.backend.repository.RestaurantRepository;
 import com.db.backend.repository.VotingRepository;
 
@@ -23,21 +23,21 @@ public class RestaurantService {
     private RestaurantRepository restaurantRepository;
 
     @Autowired
-    private AdressRepository adressRepository;
+    private AddressRepository addressRepository;
 
     @Autowired
     private VotingRepository votingRepository;
 
     public Long createRestaurant(RestaurantDTO restaurantDTO) throws Exception {
         try {
-            AdressDTO adressDTO = restaurantDTO.adress();
-            Adress adress = new Adress(adressDTO.cep(), adressDTO.street(), adressDTO.neighborhood(),
-                    adressDTO.locale(),
-                    adressDTO.uf(), adressDTO.locationNumber());
-            Adress savedAdress = this.adressRepository.save(adress);
+            AddressDTO addressDTO = restaurantDTO.address();
+            Address address = new Address(addressDTO.cep(), addressDTO.street(), addressDTO.neighborhood(),
+                    addressDTO.locale(),
+                    addressDTO.uf(), addressDTO.locationNumber(), addressDTO.complement());
+            Address savedAddress = this.addressRepository.save(address);
 
             Restaurant restaurant = new Restaurant(restaurantDTO.name(), restaurantDTO.description(),
-                    restaurantDTO.website(), savedAdress);
+                    restaurantDTO.website(), savedAddress);
             Restaurant savedRestaurant = this.restaurantRepository.save(restaurant);
 
             Voting openVoting = votingRepository.findByIsOpen(true);

@@ -9,11 +9,11 @@ import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@Table(name = "adresses")
-@Entity(name = "adresses")
+@Table(name = "addresses")
+@Entity(name = "addresses")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor()
-public class Adress {
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -37,16 +37,19 @@ public class Adress {
     @Column(nullable = false)
     private String locationNumber;
 
-    public Adress(String cep, String street, String neighborhood, String locale, String uf, String locationNumber) {
+    @Column(nullable = true)
+    private String complement;
+
+    public Address(String cep, String street, String neighborhood, String locale, String uf, String locationNumber,
+            String complement) {
         this.cep = cep;
         this.street = street;
         this.neighborhood = neighborhood;
         this.locale = locale;
         this.uf = uf;
         this.locationNumber = locationNumber;
+        this.complement = complement;
     }
-
-
 
     public String getCep() {
         return cep;
@@ -100,16 +103,19 @@ public class Adress {
         this.locationNumber = locationNumber;
     }
 
+    public void setComplement(String complement) {
+        this.complement = complement;
+    }
+
+    public String getComplement() {
+        return complement;
+    }
+
     @Override
     public String toString() {
-        return "Adress{" +
-                "id=" + id +
-                ", cep='" + cep + '\'' +
-                ", street='" + street + '\'' +
-                ", neighborhood='" + neighborhood + '\'' +
-                ", locale='" + locale + '\'' +
-                ", uf='" + uf + '\'' +
-                ", locationNumber='" + locationNumber + '\'' +
-                '}';
+        return "Address [id=" + id + ", cep=" + cep + ", street=" + street + ", neighborhood=" + neighborhood
+                + ", locale=" + locale + ", uf=" + uf + ", locationNumber=" + locationNumber + ", complement="
+                + complement + "]";
     }
+
 }
