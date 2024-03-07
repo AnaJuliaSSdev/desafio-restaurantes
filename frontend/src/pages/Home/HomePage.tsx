@@ -65,15 +65,20 @@ export function HomePage() {
         )}
         <ul className="flex-column">
           {restaurants.map((restaurant) => (
-            <CardRestaurant
+            <li
               key={restaurant.id}
-              name={restaurant.name}
-              description={restaurant.description}
-              website={restaurant.website}
-              address={restaurant.address}
-              votes={restaurant.votes}
-              id={restaurant.id}
-            />
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <CardRestaurant
+                key={restaurant.id}
+                name={restaurant.name}
+                description={restaurant.description}
+                website={restaurant.website}
+                address={restaurant.address}
+                votes={restaurant.votes}
+                id={restaurant.id}
+              />
+            </li>
           ))}
         </ul>
       </div>

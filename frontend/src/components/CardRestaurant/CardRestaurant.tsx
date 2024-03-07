@@ -31,7 +31,7 @@ export default function CardRestaurant(prop: Readonly<Restaurant>) {
     <Card
       marginBottom="30px"
       borderRadius="xl"
-      w={{ base: "100%", md: "40%", lg: "50%" }}
+      w={{ base: "100%", md: "40%"}}
       className="boxShadow"
       direction={{ base: "column", md: "row" }}
       overflow="hidden"
