@@ -11,16 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 import com.db.backend.dto.VotingDTO;
 import com.db.backend.entity.User;
-import com.db.backend.entity.Voting;
-import com.db.backend.repository.VotingRepository;
 import com.db.backend.service.VotingService;
 
 @RestController
 @RequestMapping("voting")
 public class VotingController {
-
-    @Autowired
-    private VotingRepository votingRepository;
 
     @Autowired
     private VotingService votingService;
@@ -58,5 +53,10 @@ public class VotingController {
     public ResponseEntity<VotingDTO> getOpenVoting() throws Exception {
         VotingDTO openVoting = votingService.getByIsOpen(true);
         return new ResponseEntity<>(openVoting, HttpStatus.OK);
+    }
+
+    @GetMapping("votingHappened")
+    public boolean getVotingHappened() {
+        return votingService.verifyVotingsDay();
     }
 }
