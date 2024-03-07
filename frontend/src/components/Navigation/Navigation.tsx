@@ -17,11 +17,17 @@ export function Navigation() {
       color="black"
     >
       <Box p="4">
-        <Flex flexDirection={"row"} gap={5}>
-          <Link href="/">{t("navigation.home")}</Link>
-          <Link href="/restaurant/register">{t("navigation.restaurants")}</Link>
-          <Link href="/votings/list">{t("navigation.votings")}</Link>
-        </Flex>
+        {accessToken ? (
+          <Flex flexDirection={"row"} gap={5}>
+            <Link href="/">{t("navigation.home")}</Link>
+            <Link href="/restaurant/register">
+              {t("navigation.restaurants")}
+            </Link>
+            <Link href="/votings/list">{t("navigation.votings")}</Link>
+          </Flex>
+        ) : (
+          <></>
+        )}
       </Box>
       <ButtonGroup p={1} gap="4">
         {accessToken ? (

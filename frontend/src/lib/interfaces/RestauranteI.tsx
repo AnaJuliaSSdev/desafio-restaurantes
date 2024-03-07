@@ -1,10 +1,10 @@
-import { Adress } from "./AdressI";
+import { Address } from "./AddressI";
 
 export interface Restaurant {
   id: number;
   name: string;
   description: string;
   website: string | null;
-  adress: Adress;
+  address: Address;
   votes: number;
 }

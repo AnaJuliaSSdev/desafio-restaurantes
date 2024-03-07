@@ -50,7 +50,9 @@
     "uf": "UF",
     "uf-placeholder": "Digite sua UF...",
     "locationNumber": "Número",
-    "locationNumber-placeholder": "Digite o número do restaurante..."
+    "locationNumber-placeholder": "Digite o número do restaurante...",
+    "complement": "Complemento",
+    "complement-placeholder": "Digite o complemento..."
   },
   "navigation": {
     "restaurants": "Criar restaurante",

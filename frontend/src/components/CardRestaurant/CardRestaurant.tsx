@@ -48,10 +48,16 @@ export default function CardRestaurant(prop: Readonly<Restaurant>) {
             <Heading size="md">{prop.name}</Heading>
             <Text py="2">
               Descrição: {prop.description} <br />
-              Endereço: {prop.adress.uf}, {prop.adress.locale},
-              {prop.adress.neighborhood}, {prop.adress.street},
-              {prop.adress.locationNumber} <br></br>
-              Votos: {votes} <br></br>
+              Endereço: {prop.address.uf}, {prop.address.locale},
+              {prop.address.neighborhood}, {prop.address.street},
+              {prop.address.locationNumber} <br />
+              {prop.address.complement ? (
+                "Complemento:" + `${prop.address.complement}`
+              ) : (
+                <></>
+              )}{" "}
+              <br />
+              Votos: {votes} <br />
               {prop.website ? (
                 <a href={prop.website} target="_blank">
                   <ExternalLinkIcon />

@@ -11,16 +11,17 @@ export function HomePage() {
   const [votingHappened, setVotingHappened] = useState<boolean>(false);
 
   useEffect(() => {
-    async function fetchRestaurants() {
-      try {
-        const restaurantData = await listRestaurantByFreeToVote(true);
+    listRestaurantByFreeToVote(true)
+      .then((restaurantData) => {
         setRestaurants(restaurantData);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-    fetchRestaurants();
+    getVotingHappened().then(({ data }) => {
+      setVotingHappened(data);
+    });
   }, []);
 
   const handleStartVoting = async () => {
@@ -31,14 +32,6 @@ export function HomePage() {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    async function fetchIsOpenVoting() {
-      const response = await getVotingHappened();
-      setVotingHappened(response.data);
-    }
-    fetchIsOpenVoting();
-  }, []);
 
   return (
     <div className="px-4">
@@ -77,7 +70,7 @@ export function HomePage() {
               name={restaurant.name}
               description={restaurant.description}
               website={restaurant.website}
-              adress={restaurant.adress}
+              address={restaurant.address}
               votes={restaurant.votes}
               id={restaurant.id}
             />

@@ -32,6 +32,7 @@ export function RegisterRestaurantPage() {
   const [uf, setUf] = useState("");
   const [locale, setLocale] = useState("");
   const [locationNumber, setLocationNumber] = useState("");
+  const [complement, setComplement] = useState("");
 
   const handleCepChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -84,6 +85,7 @@ export function RegisterRestaurantPage() {
         locale,
         uf,
         locationNumber,
+        complement,
       });
       setMessage({
         type: "success",
@@ -204,6 +206,19 @@ export function RegisterRestaurantPage() {
             className="mb-3 boxShadow"
             value={locationNumber}
             onChange={(event) => setLocationNumber(event.target.value)}
+          ></Input>
+
+          <FormLabel htmlFor="complement">
+            {t("register-restaurant.complement")}
+          </FormLabel>
+          <Input
+            placeholder={t("register-restaurant.complement-placeholder")}
+            type="text"
+            name="complement"
+            id="complement"
+            className="mb-3 boxShadow"
+            value={complement}
+            onChange={(event) => setComplement(event.target.value)}
           ></Input>
 
           <FormLabel htmlFor="uf">{t("register-restaurant.uf")}</FormLabel>
