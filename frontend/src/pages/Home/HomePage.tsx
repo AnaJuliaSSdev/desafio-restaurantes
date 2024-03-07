@@ -1,13 +1,14 @@
 import CardRestaurant from "@/components/CardRestaurant/CardRestaurant";
 import { Restaurant } from "@/lib/interfaces/RestauranteI";
 import { listRestaurantByFreeToVote } from "@/lib/requests/listRestaurants";
-import { startVoting } from "@/lib/requests/vote";
-import { Button } from "@chakra-ui/react";
+import { getVotingHappened, startVoting } from "@/lib/requests/vote";
+import { Box, Button, Heading } from "@chakra-ui/react";
 import { t } from "i18next";
 import { useEffect, useState } from "react";
 
 export function HomePage() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [votingHappened, setVotingHappened] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchRestaurants() {
@@ -25,19 +26,51 @@ export function HomePage() {
   const handleStartVoting = async () => {
     try {
       await startVoting();
-      console.log("votação iniciada");
+      location.reload();
     } catch (error) {
       console.log(error);
     }
   };
 
+  useEffect(() => {
+    async function fetchIsOpenVoting() {
+      const response = await getVotingHappened();
+      setVotingHappened(response.data);
+    }
+    fetchIsOpenVoting();
+  }, []);
+
   return (
     <div className="px-4">
-      <Button onClick={handleStartVoting} className="button-submit">
-        {t("home.start-voting")}
-      </Button>
+      <div className="align-center">
+        <Button
+          hidden={votingHappened}
+          onClick={handleStartVoting}
+          className="button-submit"
+        >
+          {t("home.start-voting")}
+        </Button>
+      </div>
+      <Box margin={35}>
+        {!votingHappened && restaurants.length > 0 && (
+          <Heading className="align-center">Restaurantes cadastrados:</Heading>
+        )}
+      </Box>
+      <Box margin={35}>
+        {votingHappened && (
+          <Heading className="align-center">
+            Ranking da votação de hoje:
+          </Heading>
+        )}
+      </Box>
       <div>
-        <ul>
+        {restaurants.length === 0 && (
+          <p className="align-center">
+            Não existem restaurantes cadastrados. Cadastre um restaurante agora
+            e comece a votar!
+          </p>
+        )}
+        <ul className="flex-column">
           {restaurants.map((restaurant) => (
             <CardRestaurant
               key={restaurant.id}

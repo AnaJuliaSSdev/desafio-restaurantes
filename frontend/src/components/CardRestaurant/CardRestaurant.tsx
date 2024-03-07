@@ -39,9 +39,7 @@ export default function CardRestaurant(prop: Readonly<Restaurant>) {
     >
       <Grid templateColumns={{ base: "1fr", md: "200px 1fr" }} gap={4}>
         <Image
-          objectFit="cover"
-          w="100%"
-          h="auto"
+          className="images"
           src="..\public\restaurant_icon_142617.png"
           alt="Caffe Latte"
         />
@@ -68,7 +66,7 @@ export default function CardRestaurant(prop: Readonly<Restaurant>) {
               }}
               className="button-submit"
             >
-              Vote
+              {votes > 0 ? "Remover voto" : "Votar"}
             </Button>
           </CardFooter>
         </Stack>

@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { VotingI } from "../interfaces/VotingI";
 import { http } from "./http";
 
@@ -19,4 +20,8 @@ export async function getAllVotings(): Promise<VotingI[]> {
 
 export async function getOpenVoting(): Promise<VotingI | null> {
   return await http.get("voting/getOpenVoting");
+}
+
+export async function getVotingHappened(): Promise<AxiosResponse<boolean>> {
+  return http.get("voting/votingHappened");
 }

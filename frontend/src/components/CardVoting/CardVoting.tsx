@@ -23,11 +23,9 @@ export default function CardVoting(prop: Readonly<VotingI>) {
     >
       <Grid templateColumns={{ base: "1fr", md: "200px 1fr" }} gap={4}>
         <Image
-          objectFit="cover"
-          w="100%"
-          h="auto"
-          src="..\public\restaurant_icon_142617.png"
-          alt="Caffe Latte"
+          className="images"
+          src="..\public\vote.png"
+          alt="Cursor pointer clicking in vote"
         />
         <Stack position="relative">
           <CardBody>
