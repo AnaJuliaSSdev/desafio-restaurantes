@@ -1,72 +1,76 @@
 {
-    "home": {
-        "homePage": "Página Inicial",
-        "home": "Início",
-        "login": "Entrar", 
-        "register": "Registrar", 
-        "exit": "Sair"
-    },
-    "authenticate": {
-        "login": "Entrar", 
-        "e-mail": "E-mail",
-        "email-placeholder": "Digite seu e-mail...", 
-        "password": "Senha",
-        "password-placeholder": "Digite sua senha...", 
-        "dont-have-account": "Não possui uma conta? ", 
-        "sign-up": "Cadastre-se"
-    }, 
-    "register": {
-        "register": "Registrar", 
-        "name": "Nome", 
-        "name-placeholder": "Digite seu nome...",
-        "last-name": "Sobrenome", 
-        "last-name-placeholder": "Digite seu sobrenome...",
-        "email-placeholder": "Digite seu e-mail...", 
-        "e-mail": "E-mail", 
-        "password": "Senha", 
-        "password-placeholder": "Digite sua senha...",
-        "sign-up": "Cadastrar", 
-        "already-have-account": "Já tem uma conta? ", 
-        "log-in": "Entre"
-    }, 
-    "register-restaurant": {
-        "register": "Registrar restaurante", 
-        "name": "Nome", 
-        "name-placeholder": "Digite o nome do restaurante...",
-        "description": "Descrição",
-        "description-placeholder": "Descreva o restaurante...", 
-        "website": "Website (opcional)",
-        "website-placeholder": "Cole o link do website do restaurante...",
-        "cep": "CEP", 
-        "cep-placeholder": "Digite o CEP do restaurante...",
-        "create": "Criar restaurante",
-        "street": "Rua",
-        "street-placeholder": "Digite sua Rua...",
-        "neighborhood": "Bairro",
-        "neighborhood-placeholder": "Digite seu Bairro...",
-        "locale": "Logradouro",
-        "locale-placeholder": "Digite seu Logradouro...",
-        "uf": "UF",
-        "uf-placeholder": "Digite sua UF..." 
-
-
-    },
-    "navigation": {
-        "restaurants": "Criar restaurante", 
-        "children-label-restaurant": "Adicionar restaurante", 
-        "children-sublabel-resturant": "Cadastre um novo restaurante para votação!", 
-        "login": "Entrar", 
-        "exit": "Sair",
-        "register": "Registrar", 
-        "home": "Início"
-    }, 
-    "private-route" : {
-        "not-logged": "Você não está logado", 
-        "authenticate": "Você não está logado. É necessário autenticar-se.", 
-        "ok": "Ok"
-    }, 
-    "messages" : {
-        "creating-user": "Erro ao criar usuário. Por favor, tente novamente mais tarde.",
-        "invalid-cep": "Insira um CEP válido."
-    }
+  "home": {
+    "homePage": "Página Inicial",
+    "home": "Início",
+    "login": "Entrar",
+    "register": "Registrar",
+    "exit": "Sair",
+    "start-voting": "Começar votação"
+  },
+  "authenticate": {
+    "login": "Entrar",
+    "e-mail": "E-mail",
+    "email-placeholder": "Digite seu e-mail...",
+    "password": "Senha",
+    "password-placeholder": "Digite sua senha...",
+    "dont-have-account": "Não possui uma conta? ",
+    "sign-up": "Cadastre-se"
+  },
+  "register": {
+    "register": "Registrar",
+    "name": "Nome",
+    "name-placeholder": "Digite seu nome...",
+    "last-name": "Sobrenome",
+    "last-name-placeholder": "Digite seu sobrenome...",
+    "email-placeholder": "Digite seu e-mail...",
+    "e-mail": "E-mail",
+    "password": "Senha",
+    "password-placeholder": "Digite sua senha...",
+    "sign-up": "Cadastrar",
+    "already-have-account": "Já tem uma conta? ",
+    "log-in": "Entre"
+  },
+  "register-restaurant": {
+    "register": "Registrar restaurante",
+    "name": "Nome*",
+    "name-placeholder": "Digite o nome do restaurante...",
+    "description": "Descrição*",
+    "description-placeholder": "Descreva o restaurante...",
+    "website": "Website",
+    "website-placeholder": "Cole o link do website do restaurante...",
+    "cep": "CEP*",
+    "cep-placeholder": "Digite o CEP do restaurante...",
+    "create": "Criar restaurante",
+    "street": "Rua*",
+    "street-placeholder": "Digite sua Rua...",
+    "neighborhood": "Bairro*",
+    "neighborhood-placeholder": "Digite seu Bairro...",
+    "locale": "Logradouro*",
+    "locale-placeholder": "Digite seu Logradouro...",
+    "uf": "UF*",
+    "uf-placeholder": "Digite sua UF...",
+    "locationNumber": "Número",
+    "locationNumber-placeholder": "Digite o número do restaurante...",
+    "complement": "Complemento",
+    "complement-placeholder": "Digite o complemento..."
+  },
+  "navigation": {
+    "restaurants": "Criar restaurante",
+    "children-label-restaurant": "Adicionar restaurante",
+    "children-sublabel-resturant": "Cadastre um novo restaurante para votação!",
+    "login": "Entrar",
+    "exit": "Sair",
+    "register": "Registrar",
+    "home": "Início",
+    "votings": "Votações"
+  },
+  "private-route": {
+    "not-logged": "Você não está logado",
+    "authenticate": "Você não está logado. É necessário autenticar-se.",
+    "ok": "Ok"
+  },
+  "messages": {
+    "creating-user": "Erro ao criar usuário. Por favor, tente novamente mais tarde.",
+    "invalid-cep": "Insira um CEP válido."
+  }
 }
