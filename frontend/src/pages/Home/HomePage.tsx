@@ -2,6 +2,7 @@ import CardRestaurant from "@/components/CardRestaurant/CardRestaurant";
 import { Restaurant } from "@/lib/interfaces/RestauranteI";
 import { listRestaurantByFreeToVote } from "@/lib/requests/listRestaurants";
 import { getVotingHappened, startVoting } from "@/lib/requests/vote";
+import { UnlockIcon } from "@chakra-ui/icons";
 import { Box, Button, Heading } from "@chakra-ui/react";
 import { t } from "i18next";
 import { useEffect, useState } from "react";
@@ -70,18 +71,20 @@ export function HomePage() {
             e comece a votar!
           </p>
         )}
-        <ul className="flex-column">
-          {restaurants.map((restaurant) => (
-            <CardRestaurant
-              key={restaurant.id}
-              name={restaurant.name}
-              description={restaurant.description}
-              website={restaurant.website}
-              adress={restaurant.adress}
-              votes={restaurant.votes}
-              id={restaurant.id}
-            />
-          ))}
+        <ul>
+            {restaurants.map((restaurant) => (
+              <li style={{display: 'flex', justifyContent: 'center'}}>
+                <CardRestaurant
+                  key={restaurant.id}
+                  name={restaurant.name}
+                  description={restaurant.description}
+                  website={restaurant.website}
+                  adress={restaurant.adress}
+                  votes={restaurant.votes}
+                  id={restaurant.id}
+                />
+              </li>
+            ))}
         </ul>
       </div>
     </div>
