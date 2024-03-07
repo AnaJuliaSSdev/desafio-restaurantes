@@ -42,15 +42,14 @@ public class Restaurant {
     private LocalDateTime avaliableIn;
 
     @ManyToOne
-    @JoinColumn(name = "adress_id")
-    private Adress adress;
+    @JoinColumn(name = "address_id")
+    private Address address;
 
-
-    public Restaurant(String name, String description, String website, Adress adress) {
+    public Restaurant(String name, String description, String website, Address address) {
         this.name = name;
         this.description = description;
         this.website = website;
-        this.adress = adress;
+        this.address = address;
     }
 
     public void setName(String name) {
@@ -85,8 +84,8 @@ public class Restaurant {
         this.avaliableIn = avaliableIn;
     }
 
-    public void setAdress(Adress adress) {
-        this.adress = adress;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getName() {
@@ -101,7 +100,9 @@ public class Restaurant {
         return website;
     }
 
-    public Long getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
     public int getVotes() {
         return votes;
@@ -115,8 +116,8 @@ public class Restaurant {
         return avaliableIn;
     }
 
-    public Adress getAdress() {
-        return adress;
+    public Address getAddress() {
+        return address;
     }
 
     @Override
@@ -129,7 +130,7 @@ public class Restaurant {
                 ", votes=" + votes +
                 ", freeToVote=" + freeToVote +
                 ", avaliableIn=" + avaliableIn +
-                ", adress=" + adress +
+                ", address=" + address +
                 '}';
     }
 }

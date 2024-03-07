@@ -1,5 +1,7 @@
 package com.db.backend.service;
 
+import com.db.backend.converter.VotingConverter;
+import com.db.backend.dto.VotingDTO;
 import com.db.backend.entity.Restaurant;
 import com.db.backend.entity.User;
 import com.db.backend.entity.Voting;
@@ -7,14 +9,17 @@ import com.db.backend.repository.RestaurantRepository;
 import com.db.backend.repository.UserRepository;
 import com.db.backend.repository.VotingRepository;
 
+import io.micrometer.core.ipc.http.HttpSender.Response;
 import lombok.NonNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Optional;
@@ -60,8 +65,17 @@ public class VotingService {
         return openVoting.isPresent() && openVoting.get().getStartDate().toLocalDate().equals(today);
     }
 
-    public Collection<Voting> getAllVoting() {
-        return this.repository.findAll();
+    public Collection<VotingDTO> getAllVoting() {
+        VotingConverter votingConverter = new VotingConverter();
+
+        Collection<VotingDTO> votingDTOs = new ArrayList<>();
+        for (Voting voting : this.repository.findAll()) {
+            VotingDTO votingDTO = votingConverter.convertEntityToDto(voting);
+            votingDTOs.add(votingDTO);
+        }
+
+        return votingDTOs;
+
     }
 
     public void userVote(@NonNull Long idUser, @NonNull Long idRestaurant) throws Exception {
@@ -86,6 +100,10 @@ public class VotingService {
 
         if (user == null || restaurant == null) {
             throw new Exception("Invalid ID provided.");
+        }
+
+        if (restaurant.isFreeToVote() == false) {
+            throw new Exception("Restaurant not avaliable to vote.");
         }
 
         processVote(user, restaurant);
@@ -157,10 +175,41 @@ public class VotingService {
 
     public void calculateAvaliableIn(Restaurant currentWinner) {
         LocalDateTime currentDate = LocalDateTime.now();
-        int oneWeek = 7;
-        LocalDateTime avaliableIn = currentDate.plusDays(oneWeek);
+        LocalDateTime avaliableIn = currentDate.plusWeeks(1);
 
         currentWinner.setAvaliableIn(avaliableIn);
+        currentWinner.setFreeToVote(false);
+        restaurantRepository.save(currentWinner);
     }
 
+    public void verifyAvaliableIn() {
+        LocalDate currentDate = LocalDate.now();
+        Collection<Restaurant> restaurants = restaurantRepository.findByFreeToVote(false);
+
+        restaurants.stream()
+                .filter(restaurant -> restaurant.getAvaliableIn().toLocalDate().equals(currentDate))
+                .forEach(restaurant -> {
+                    restaurant.setAvaliableIn(null);
+                    restaurant.setFreeToVote(true);
+                    restaurantRepository.save(restaurant);
+                });
+    }
+
+    public void resetVotes(Voting voting) {
+        Collection<Restaurant> restaurants = voting.getRestaurants();
+        restaurants.stream().forEach(Restaurant::resetVotes);
+    }
+
+    public void closeVoting(Voting voting) {
+        voting.setOpen(false);
+        votingRepository.save(voting);
+    }
+
+    public VotingDTO getByIsOpen(boolean isOpen) throws Exception {
+        Voting openVoting = votingRepository.findByIsOpen(isOpen);
+        if (openVoting == null) {
+            throw new Exception("There is no open voting.");
+        }
+        return new VotingConverter().convertEntityToDto(openVoting);
+    }
 }
