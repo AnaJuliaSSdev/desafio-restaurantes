@@ -13,8 +13,10 @@ import {
   Grid,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function CardRestaurant(prop: Readonly<Restaurant>) {
+  const { t } = useTranslation();
   const handleVote = async (id_restaurant: number) => {
     try {
       await userVote(id_restaurant);
@@ -31,7 +33,7 @@ export default function CardRestaurant(prop: Readonly<Restaurant>) {
     <Card
       marginBottom="30px"
       borderRadius="xl"
-      w={{ base: "100%", md: "40%"}}
+      w={{ base: "100%", md: "40%" }}
       className="boxShadow"
       direction={{ base: "column", md: "row" }}
       overflow="hidden"
@@ -47,17 +49,18 @@ export default function CardRestaurant(prop: Readonly<Restaurant>) {
           <CardBody>
             <Heading size="md">{prop.name}</Heading>
             <Text py="2">
-              Descrição: {prop.description} <br />
-              Endereço: {prop.address.uf}, {prop.address.locale},
-              {prop.address.neighborhood}, {prop.address.street},
-              {prop.address.locationNumber} <br />
+              {t("card-restaurant.description")} {prop.description} <br />
+              {t("card-restaurant.address")} {prop.address.uf},{" "}
+              {prop.address.locale}, {prop.address.neighborhood},{" "}
+              {prop.address.street},{prop.address.locationNumber} <br />
               {prop.address.complement ? (
-                "Complemento:" + `${prop.address.complement}`
+                `${t("card-restaurant.complement")}` +
+                `${prop.address.complement}`
               ) : (
                 <></>
               )}{" "}
               <br />
-              Votos: {votes} <br />
+              {t("card-restaurant.votes")} {votes} <br />
               {prop.website ? (
                 <a href={prop.website} target="_blank">
                   <ExternalLinkIcon />
@@ -72,7 +75,9 @@ export default function CardRestaurant(prop: Readonly<Restaurant>) {
               }}
               className="button-submit"
             >
-              {votes > 0 ? "Remover voto" : "Votar"}
+              {votes > 0
+                ? `${t("card-restaurant.remove-vote")}`
+                : `${t("card-restaurant.vote")}`}
             </Button>
           </CardFooter>
         </Stack>

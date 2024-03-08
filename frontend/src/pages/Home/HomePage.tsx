@@ -46,22 +46,19 @@ export function HomePage() {
       </div>
       <Box margin={35}>
         {!votingHappened && restaurants.length > 0 && (
-          <Heading className="align-center">Restaurantes cadastrados:</Heading>
+          <Heading className="align-center">
+            {t("home.registered-restaurants")}
+          </Heading>
         )}
       </Box>
       <Box margin={35}>
         {votingHappened && (
-          <Heading className="align-center">
-            Ranking da votação de hoje:
-          </Heading>
+          <Heading className="align-center">{t("home.ranking-voting")}</Heading>
         )}
       </Box>
       <div>
         {restaurants.length === 0 && (
-          <p className="align-center">
-            Não existem restaurantes cadastrados. Cadastre um restaurante agora
-            e comece a votar!
-          </p>
+          <p className="align-center">{t("home.no-registered-restaurants")}</p>
         )}
         <ul className="flex-column">
           {restaurants.map((restaurant) => (

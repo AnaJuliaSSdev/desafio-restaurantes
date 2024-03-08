@@ -9,8 +9,10 @@ import {
   CardFooter,
   Grid,
 } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 
 export default function CardVoting(prop: Readonly<VotingI>) {
+  const { t } = useTranslation();
   return (
     <Card
       marginBottom="30px"
@@ -29,12 +31,22 @@ export default function CardVoting(prop: Readonly<VotingI>) {
         />
         <Stack position="relative">
           <CardBody>
-            <Heading size="md">Votação iniciada em: {prop.startDate}</Heading>
-            Votação em aberto: {prop.isOpen ? "Sim" : "Não"}
+            <Heading size="md">
+              {t("card-voting.voting-started-on")} {prop.startDate}
+            </Heading>
+            {t("card-voting.open-voting")}{" "}
+            {prop.isOpen
+              ? `${t("card-voting.yes")}`
+              : `${t("card-voting.nope")}`}
             <br></br>
-            Resultado: {prop.isOpen ? " Parcial" : " Final"}
+            {t("card-voting.result")}{" "}
+            {prop.isOpen
+              ? `${t("card-voting.partial")}`
+              : `${t("card-voting.final")}`}
             <br></br>
-            {prop.winner && `Restaurante vencedor: ${prop.winner.name}`}
+            {prop.winner && `${t("card-voting.winner")}: ${prop.winner}`}
+            <br></br>
+            {prop.votes && `${t("card-voting.votes")} ${prop.votes}`}
             <Text py="2"></Text>
           </CardBody>
           <CardFooter position="absolute" top="0" right="0"></CardFooter>
