@@ -3,8 +3,15 @@ package com.db.backend.controller;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import static org.hamcrest.Matchers.hasSize;
 
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -20,10 +27,10 @@ import com.db.backend.dto.AddressDTO;
 import com.db.backend.dto.RestaurantDTO;
 import com.db.backend.entity.Address;
 import com.db.backend.entity.Restaurant;
-import com.db.backend.entity.Voting;
 import com.db.backend.repository.AddressRepository;
 import com.db.backend.repository.RestaurantRepository;
 import com.db.backend.repository.VotingRepository;
+import com.db.backend.service.RestaurantService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -33,6 +40,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 class RestaurantControllerUnitTest {
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private RestaurantService restaurantService;
 
     @MockBean
     private RestaurantRepository restaurantRepository;
@@ -58,6 +68,23 @@ class RestaurantControllerUnitTest {
         mockMvc.perform(post("/restaurant/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(convertToJson(restaurantDTO))).andExpect(status().isCreated());
+    }
+
+    @Test
+    @WithMockUser(username = "user", roles = { "USER" })
+    void getByFreeToVote() throws Exception {
+        Restaurant restaurant = mock(Restaurant.class);
+        when(restaurant.getId()).thenReturn(1L);
+        when(restaurant.isFreeToVote()).thenReturn(true);
+
+        Collection<Restaurant> restaurants = new ArrayList<>();
+        restaurants.add(restaurant);
+
+        when(restaurantService.getByFreeToVote(true)).thenReturn(restaurants);
+
+        mockMvc.perform(get("/restaurant/getByFreeToVote/true")).andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("[0].id").value(restaurant.getId()));
     }
 
     private String convertToJson(Object object) throws Exception {
