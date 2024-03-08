@@ -1,11 +1,9 @@
 {
   "home": {
-    "homePage": "Página Inicial",
-    "home": "Início",
-    "login": "Entrar",
-    "register": "Registrar",
-    "exit": "Sair",
-    "start-voting": "Começar votação"
+    "start-voting": "Começar votação",
+    "registered-restaurants": "Restaurantes cadastrados:",
+    "ranking-voting": "Ranking da votação de hoje:",
+    "no-registered-restaurants": "Não existem restaurantes cadastrados. Cadastre um restaurante agora e comece a votar!"
   },
   "authenticate": {
     "login": "Entrar",
@@ -54,6 +52,29 @@
     "complement": "Complemento",
     "complement-placeholder": "Digite o complemento..."
   },
+  "card-restaurant": {
+    "description": "Descrição: ",
+    "address": "Endereço: ",
+    "complement": "Complemento: ",
+    "votes": "Votos: ",
+    "remove-vote": "Remover voto",
+    "vote": "Votar"
+  },
+  "voting": {
+    "start-voting": "Começar votação",
+    "no-record-votes": "Não existem votações registradas. Comece uma votação agora!"
+  },
+  "card-voting": {
+    "voting-started-on": "Votação iniciada em: ",
+    "open-voting": "Votação em aberto: ",
+    "result": "Resultado: ",
+    "winner": "Restaurante vencedor: ",
+    "yes": "Sim",
+    "nope": "Não",
+    "partial": "Parcial",
+    "final": "Final",
+    "votes": "Votos: "
+  },
   "navigation": {
     "restaurants": "Criar restaurante",
     "children-label-restaurant": "Adicionar restaurante",
@@ -64,13 +85,14 @@
     "home": "Início",
     "votings": "Votações"
   },
-  "private-route": {
-    "not-logged": "Você não está logado",
-    "authenticate": "Você não está logado. É necessário autenticar-se.",
-    "ok": "Ok"
-  },
   "messages": {
     "creating-user": "Erro ao criar usuário. Por favor, tente novamente mais tarde.",
-    "invalid-cep": "Insira um CEP válido."
+    "invalid-cep": "Insira um CEP válido.",
+    "empty-email-and-password": "Por favor, preencha os campos de Email e Senha",
+    "invalid-credentials": "A autenticação falhou devido à credenciais invalidas",
+    "internet-connection": "Por favor, verifique sua conexão com a internet",
+    "successfull-authenticated": "Você autenticou com sucesso",
+    "restaurant-registered-successfully": "Restaurante cadastrado com sucesso!",
+    "error-creating-restaurant": "Erro ao criar restaurante. Por favor, tente novamente mais tarde."
   }
 }

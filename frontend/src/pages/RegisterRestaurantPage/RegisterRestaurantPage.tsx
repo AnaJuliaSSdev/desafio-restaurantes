@@ -89,14 +89,13 @@ export function RegisterRestaurantPage() {
       });
       setMessage({
         type: "success",
-        description: "Restaurante cadastrado com sucesso!",
+        description: `${t("messages.restaurant-registered-successfully")}`,
       });
       navigate("/");
     } catch (error) {
       setMessage({
         type: "warning",
-        description:
-          "Erro ao criar restaurante. Por favor, tente novamente mais tarde.",
+        description: `${t("messages.error-creating-restaurant")}`,
       });
     }
   };
