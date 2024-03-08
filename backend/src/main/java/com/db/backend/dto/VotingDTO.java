@@ -6,6 +6,6 @@ import jakarta.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
-public record VotingDTO(@NotEmpty Collection<Restaurant> restaurants, LocalDateTime startDate, Restaurant winner,
+public record VotingDTO(@NotEmpty Collection<Restaurant> restaurants, LocalDateTime startDate, String winner,
     Boolean isOpen) {
 }

@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { VotingI } from "@/lib/interfaces/VotingI";
 import { getAllVotings, startVoting } from "@/lib/requests/vote";
 import CardVoting from "@/components/CardVoting/CardVoting";
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 
 export default function Voting() {
   const [votings, setVotings] = useState<VotingI[]>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     async function fetchVotings() {
@@ -29,7 +31,12 @@ export default function Voting() {
   };
 
   function formatStartDate(date: string): string {
-    return date.slice(0, 10).split("-").reverse().join("-");
+    return date.slice(0, 10).split("-").reverse().join("/");
+  }
+
+  function getWinnerData(data: any, fieldName: string): string {
+    data = data.replaceAll("´", '"');
+    return JSON.parse(data)[fieldName];
   }
 
   return (
@@ -40,12 +47,12 @@ export default function Voting() {
           onClick={handleStartVoting}
           className="button-submit"
         >
-          Começar votação
+          {t("voting.start-voting")}
         </Button>
       </div>
       <Box margin={35}>
         <p hidden={votings.length != 0} className="align-center">
-          Não existem votações registradas. Comece uma votação agora!
+          {t("voting.no-record-votes")}
         </p>
       </Box>
 
@@ -55,7 +62,12 @@ export default function Voting() {
             key={index}
             restaurants={voting.restaurants}
             startDate={formatStartDate(voting.startDate)}
-            winner={voting.winner}
+            winner={
+              voting.winner ? getWinnerData(voting.winner, "name") : undefined
+            }
+            votes={
+              voting.winner ? getWinnerData(voting.winner, "votes") : undefined
+            }
             isOpen={voting.isOpen}
           />
         ))}

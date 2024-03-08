@@ -1,4 +1,4 @@
-import './Authenticate.css'
+import "./Authenticate.css";
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -8,7 +8,7 @@ import {
   FormLabel,
   Input,
   Link,
-  Text
+  Text,
 } from "@chakra-ui/react";
 
 import { authenticateRequest } from "@/lib/requests";
@@ -25,8 +25,8 @@ export function AuthenticateUserPage() {
   const [password, setPassword] = useState("");
 
   const resetForm = () => {
-      setEmail("");
-      setPassword("");
+    setEmail("");
+    setPassword("");
   };
 
   const handleFormSubmit = async (event: FormEvent) => {
@@ -35,7 +35,7 @@ export function AuthenticateUserPage() {
     if (!email || !password) {
       setMessage({
         type: "info",
-        description: "Por favor, preencha os campos de Email e Senha",
+        description: `${t("messages.empty-email-and-password")}`,
       });
       return;
     }
@@ -47,13 +47,13 @@ export function AuthenticateUserPage() {
         case "UNEXCEPTED_ERROR":
           setMessage({
             type: "error",
-            description: "A autenticação falhou devido à credenciais invalidas",
+            description: `${t("messages.invalid-credentials")}`,
           });
           break;
         case "NETWORK_CONNECTION_ISSUE":
           setMessage({
             type: "warning",
-            description: "Por favor, verifique sua conexão com a internet",
+            description: `${t("messages.internet-connection")}`,
           });
           break;
       }
@@ -61,7 +61,7 @@ export function AuthenticateUserPage() {
     if (response) {
       setMessage({
         type: "success",
-        description: "Você autenticou com sucesso",
+        description: `${t("messages.successfull-authenticated")}`,
       });
       setTimeout(function () {
         updateAccessToken(response.token);
@@ -70,10 +70,10 @@ export function AuthenticateUserPage() {
     }
   };
 
-  return (  
-    <Container className='login-container'>
-      <Text className='authenticate-login colorRed align-center'>
-        {t('authenticate.login')}
+  return (
+    <Container className="login-container">
+      <Text className="authenticate-login colorRed align-center">
+        {t("authenticate.login")}
       </Text>
       {message && <Message {...message} />}
       <FormControl>
@@ -84,11 +84,10 @@ export function AuthenticateUserPage() {
             type="text"
             name="email"
             id="email"
-            value = {email}
+            value={email}
             onChange={(event) => setEmail(event.target.value)}
             boxShadow="2px 3px 5px rgba(0, 0, 0, 0.2)"
             border="none"
-
           />
         </Container>
         <Container className="mb-3">
@@ -100,18 +99,27 @@ export function AuthenticateUserPage() {
             type="password"
             name="password"
             id="password"
-            value = {password}
-            onChange = {(event) => setPassword(event.target.value)}
-            className='boxShadow marginBottom'
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            className="boxShadow marginBottom"
           />
         </Container>
-        <Container className='align-center marginBottom'>
-          <Button onClick={handleFormSubmit} type="submit" className='button-submit'>
+        <Container className="align-center marginBottom">
+          <Button
+            onClick={handleFormSubmit}
+            type="submit"
+            className="button-submit"
+          >
             {t("authenticate.login")}
           </Button>
         </Container>
         <Container className="align-center">
-          <Text as={'p'}>{t('authenticate.dont-have-account')}<Link href="/register" className="linkBlue" fontWeight={"bold"}>{t('authenticate.sign-up')}</Link> </Text>
+          <Text as={"p"}>
+            {t("authenticate.dont-have-account")}
+            <Link href="/register" className="linkBlue" fontWeight={"bold"}>
+              {t("authenticate.sign-up")}
+            </Link>{" "}
+          </Text>
         </Container>
       </FormControl>
     </Container>

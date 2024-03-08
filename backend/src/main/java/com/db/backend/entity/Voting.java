@@ -16,9 +16,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 
@@ -42,9 +40,8 @@ public class Voting {
     @Column(nullable = false)
     private boolean isOpen;
 
-    @OneToOne
-    @JoinColumn(name = "winner_id")
-    private Restaurant winner;
+    @Column(nullable = true, length = 500)
+    private String winner;
 
     public Voting(Collection<Restaurant> restaurants) {
         this.restaurants = restaurants;
@@ -75,12 +72,15 @@ public class Voting {
         this.isOpen = isOpen;
     }
 
-    public Restaurant getWinner() {
+    public String getWinner() {
         return winner;
     }
 
-    public void setWinner(Restaurant winner) {
+    public void setWinner(String winner) {
         this.winner = winner;
     }
 
+    public void setRestaurants(Collection<Restaurant> restaurants) {
+        this.restaurants = restaurants;
+    }
 }
