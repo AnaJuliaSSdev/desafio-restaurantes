@@ -82,4 +82,7 @@ public class Voting {
         this.winner = winner;
     }
 
+    public void setRestaurants(Collection<Restaurant> restaurants) {
+        this.restaurants = restaurants;
+    }
 }

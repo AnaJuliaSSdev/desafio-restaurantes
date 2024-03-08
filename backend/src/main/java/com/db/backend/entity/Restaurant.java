@@ -122,6 +122,7 @@ public class Restaurant {
 
     @Override
     public String toString() {
-        return "{´id´: ´%s´, ´name´: ´%s´, ´description´: ´%s´, ´website´: ´%s´, ´votes´: %d, ´freeToVote´: %b, ´avaliableIn´: ´%s´, ´address´: %s}".formatted(id, name, description, website, votes, freeToVote, avaliableIn, address);
+        return "{´id´: ´%s´, ´name´: ´%s´, ´description´: ´%s´, ´website´: ´%s´, ´votes´: %d, ´freeToVote´: %b, ´avaliableIn´: ´%s´, ´address´: %s}"
+                .formatted(id, name, description, website, votes, freeToVote, avaliableIn, address);
     }
 }

@@ -9,11 +9,9 @@ import com.db.backend.repository.RestaurantRepository;
 import com.db.backend.repository.UserRepository;
 import com.db.backend.repository.VotingRepository;
 
-import io.micrometer.core.ipc.http.HttpSender.Response;
 import lombok.NonNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,7 +20,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.List;
 
@@ -51,7 +48,7 @@ public class VotingService {
 
         Collection<Restaurant> restaurants = restaurantService.getByFreeToVote(true);
         Voting voting = new Voting(restaurants);
-        this.repository.save(voting);
+        votingRepository.save(voting);
     }
 
     public boolean verifyVotingsDay() {
@@ -59,10 +56,10 @@ public class VotingService {
         LocalDateTime startOfDay = today.atStartOfDay();
         LocalDateTime endOfDay = today.atTime(LocalTime.MAX);
 
-        Optional<Voting> openVoting = votingRepository.findFirstByStartDateBetweenOrderByStartDateDesc(startOfDay,
+        Voting openVoting = votingRepository.findFirstByStartDateBetweenOrderByStartDateDesc(startOfDay,
                 endOfDay);
 
-        return openVoting.isPresent() && openVoting.get().getStartDate().toLocalDate().equals(today);
+        return openVoting != null && openVoting.getStartDate().toLocalDate().equals(today);
     }
 
     public Collection<VotingDTO> getAllVoting() {
@@ -154,7 +151,7 @@ public class VotingService {
                 System.out.println("Restaurante ID: " + restaurant.getId() + ", Votos: " + restaurant.getVotes());
             }
 
-            if (restaurants == null) {
+            if (restaurants.isEmpty()) {
                 throw new Exception("No restaurants are registered in this voting.");
             }
 
