@@ -1,11 +1,13 @@
 package com.db.backend.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,8 +20,10 @@ import com.db.backend.dto.AddressDTO;
 import com.db.backend.dto.RestaurantDTO;
 import com.db.backend.entity.Address;
 import com.db.backend.entity.Restaurant;
+import com.db.backend.entity.Voting;
 import com.db.backend.repository.AddressRepository;
 import com.db.backend.repository.RestaurantRepository;
+import com.db.backend.repository.VotingRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -36,7 +40,11 @@ class RestaurantControllerUnitTest {
     @MockBean
     private AddressRepository addressRepository;
 
+    @MockBean
+    private VotingRepository votingRepository;
+
     @Test
+    @WithMockUser(username = "user", roles = { "USER" })
     void createRestaurantSuccess() throws Exception {
         AddressDTO addressDTO = new AddressDTO("01001000", "Praça da Sé", "Sé", "São Paulo", "SP", "20", "complement");
         Address address = new Address("01001000", "Praça da Sé", "Sé", "São Paulo", "SP", "20", "complement");
