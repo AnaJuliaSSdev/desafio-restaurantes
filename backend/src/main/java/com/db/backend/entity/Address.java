@@ -113,9 +113,6 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Address [id=" + id + ", cep=" + cep + ", street=" + street + ", neighborhood=" + neighborhood
-                + ", locale=" + locale + ", uf=" + uf + ", locationNumber=" + locationNumber + ", complement="
-                + complement + "]";
+        return "{´id´: ´%s´, ´cep´: ´%s´, ´street´: ´%s´, ´neighborhood´: ´%s´, ´locale´: ´%s´, ´uf´: ´%s´, ´locationNumber´: ´%s´, ´complement´: ´%s´}".formatted(id, cep, street, neighborhood, locale, uf, locationNumber, complement);
     }
-
 }

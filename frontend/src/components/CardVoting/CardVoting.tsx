@@ -34,7 +34,9 @@ export default function CardVoting(prop: Readonly<VotingI>) {
             <br></br>
             Resultado: {prop.isOpen ? " Parcial" : " Final"}
             <br></br>
-            {prop.winner && `Restaurante vencedor: ${prop.winner.name}`}
+            {prop.winner && `Restaurante vencedor: ${prop.winner}`}
+            <br></br>
+            {prop.votes && `Votos: ${prop.votes}`}
             <Text py="2"></Text>
           </CardBody>
           <CardFooter position="absolute" top="0" right="0"></CardFooter>

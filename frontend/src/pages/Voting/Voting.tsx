@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { VotingI } from "@/lib/interfaces/VotingI";
 import { getAllVotings, startVoting } from "@/lib/requests/vote";
 import CardVoting from "@/components/CardVoting/CardVoting";
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 
 export default function Voting() {
   const [votings, setVotings] = useState<VotingI[]>([]);
@@ -32,6 +32,11 @@ export default function Voting() {
     return date.slice(0, 10).split("-").reverse().join("-");
   }
 
+  function getWinnerData(data: any, fieldName: string): string {
+    data = data.replaceAll('´', '"')
+    return JSON.parse(data)[fieldName]
+  }
+
   return (
     <div>
       <div className="align-center">
@@ -55,7 +60,8 @@ export default function Voting() {
             key={index}
             restaurants={voting.restaurants}
             startDate={formatStartDate(voting.startDate)}
-            winner={voting.winner}
+            winner={getWinnerData(voting.winner, "name")}
+            votes={getWinnerData(voting.winner, "votes")}
             isOpen={voting.isOpen}
           />
         ))}

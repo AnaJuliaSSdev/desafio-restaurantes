@@ -164,7 +164,7 @@ public class VotingService {
 
             Restaurant winner = sortedRestaurants.get(0);
 
-            voting.setWinner(winner);
+            voting.setWinner(winner.toString());
 
             return winner;
 
