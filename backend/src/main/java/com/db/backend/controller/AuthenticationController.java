@@ -1,38 +1,39 @@
 package com.db.backend.controller;
 
+import com.db.backend.service.AuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.db.backend.dto.UserAuthenticationRequestDTO;
 import com.db.backend.dto.UserRegistrationRequestDTO;
 import com.db.backend.dto.UserRegistrationResponseDTO;
 import com.db.backend.entity.User;
 import com.db.backend.infra.security.JwtService;
-import com.db.backend.repository.UserRepository;
+import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.validation.Valid;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping("auth")
 public class AuthenticationController {
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private UserRepository repository;
-
-    @Autowired
     private JwtService jwtService;
 
+    @Autowired
+    private AuthorizationService authorizationService;
+
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid UserAuthenticationRequestDTO data) {
+    public ResponseEntity<UserRegistrationResponseDTO> login(@RequestBody @Valid UserAuthenticationRequestDTO data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = this.jwtService.generate((User) auth.getPrincipal());
@@ -40,13 +41,22 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid UserRegistrationRequestDTO data) {
-        if (this.repository.findByEmail(data.email()) != null) {
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<String> register(@RequestBody @Valid UserRegistrationRequestDTO data) {
+        try {
+            authorizationService.registerUser(data);
+            return new ResponseEntity<>("User Created", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.email(), encryptedPassword);
-        this.repository.save(newUser);
-        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<Collection<User>> getAllUsers() {
+        try {
+            Collection<User> users = authorizationService.getAllUser();
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

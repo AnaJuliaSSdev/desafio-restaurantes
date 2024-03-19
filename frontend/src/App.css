@@ -1,0 +1,54 @@
+:root {
+  --primaryRed: #db181f;
+  --linkBlue: #4085ed;
+}
+
+.marginBottom {
+  margin-bottom: 30px !important;
+}
+
+.boxShadow {
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.2) !important;
+  border: none !important;
+}
+
+.colorRed {
+  color: var(--primaryRed);
+}
+
+.linkBlue {
+  color: var(--linkBlue) !important;
+}
+
+.bgRed {
+  color: var(--primaryRed);
+}
+
+.align-center {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-column {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.button-submit {
+  color: white !important;
+  background-color: var(--primaryRed) !important;
+}
+
+.button-submit:hover {
+  background-color: white !important ;
+  color: var(--primaryRed) !important;
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.images {
+  width: 80%;
+  height: auto;
+  padding: 1rem;
+  object-fit: cover;
+}
